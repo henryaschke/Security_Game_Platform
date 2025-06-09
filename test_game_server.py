@@ -60,27 +60,31 @@ class TestAPIEndpoints:
     
     def test_api_scenarios_get(self, client):
         """Test getting scenarios"""
-        response = client.get('/api/scenarios')
+        response = client.get('/api/game/scenarios')
         assert response.status_code == 200
         
         data = json.loads(response.data)
-        assert isinstance(data, list)
-        assert len(data) > 0
+        assert data['status'] == 'success'
+        assert isinstance(data['scenarios'], list)
+        assert len(data['scenarios']) > 0
     
     def test_api_submit_score(self, client):
         """Test score submission"""
         score_data = {
-            'game': 'password-chef',
+            'player_name': 'test_ninja',
             'score': 100,
-            'player': 'test_ninja'
+            'level': 1,
+            'threats_found': 3,
+            'accuracy': 85
         }
         
-        response = client.post('/api/scores', 
+        response = client.post('/api/game/submit-score', 
                              data=json.dumps(score_data),
                              content_type='application/json')
         
-        assert response.status_code == 201
+        assert response.status_code == 200
         data = json.loads(response.data)
+        assert data['status'] == 'success'
         assert data['message'] == 'Score submitted successfully'
     
     def test_api_leaderboard(self, client):
@@ -89,7 +93,8 @@ class TestAPIEndpoints:
         assert response.status_code == 200
         
         data = json.loads(response.data)
-        assert isinstance(data, list)
+        assert data['status'] == 'success'
+        assert isinstance(data['leaderboard'], list)
 
 class TestInputValidation:
     """🔒 Test input validation and sanitization"""
@@ -97,15 +102,14 @@ class TestInputValidation:
     def test_invalid_score_submission(self, client):
         """Test invalid score data is rejected"""
         invalid_scores = [
-            {'game': '', 'score': 100, 'player': 'test'},  # Empty game
-            {'game': 'test', 'score': -1, 'player': 'test'},  # Negative score
-            {'game': 'test', 'score': 'invalid', 'player': 'test'},  # Invalid score type
-            {'game': 'test', 'score': 100, 'player': ''},  # Empty player
-            {'game': 'test', 'score': 100},  # Missing player
+            {'player_name': '', 'score': 100, 'level': 1, 'threats_found': 1, 'accuracy': 50},  # Empty name
+            {'player_name': 'test', 'score': -1, 'level': 1, 'threats_found': 1, 'accuracy': 50},  # Negative score
+            {'player_name': 'test', 'score': 'invalid', 'level': 1, 'threats_found': 1, 'accuracy': 50},  # Invalid score type
+            {'player_name': 'test', 'score': 100},  # Missing required fields
         ]
         
         for invalid_data in invalid_scores:
-            response = client.post('/api/scores',
+            response = client.post('/api/game/submit-score',
                                  data=json.dumps(invalid_data),
                                  content_type='application/json')
             assert response.status_code == 400
@@ -113,17 +117,19 @@ class TestInputValidation:
     def test_xss_prevention(self, client):
         """Test XSS attack prevention"""
         xss_payload = {
-            'game': '<script>alert("xss")</script>',
+            'player_name': '<script>alert("xss")</script>',
             'score': 100,
-            'player': '<img src=x onerror=alert("xss")>'
+            'level': 1,
+            'threats_found': 1,
+            'accuracy': 50
         }
         
-        response = client.post('/api/scores',
+        response = client.post('/api/game/submit-score',
                              data=json.dumps(xss_payload),
                              content_type='application/json')
         
         # Should either sanitize or reject
-        assert response.status_code in [400, 201]  # 400 if rejected, 201 if sanitized
+        assert response.status_code in [400, 200]  # 400 if rejected, 200 if sanitized
 
 class TestPerformance:
     """⚡ Test performance and load handling"""
@@ -132,7 +138,7 @@ class TestPerformance:
         """Test that responses are fast enough"""
         import time
         
-        endpoints = ['/', '/health', '/api/scenarios', '/api/leaderboard']
+        endpoints = ['/', '/health', '/api/game/scenarios', '/api/leaderboard']
         
         for endpoint in endpoints:
             start_time = time.time()
@@ -158,7 +164,7 @@ class TestErrorHandling:
     
     def test_malformed_json(self, client):
         """Test malformed JSON handling"""
-        response = client.post('/api/scores',
+        response = client.post('/api/game/submit-score',
                              data='{"invalid": json}',
                              content_type='application/json')
         assert response.status_code == 400
@@ -170,15 +176,17 @@ class TestDataPersistence:
         """Test that scores are properly stored and retrieved"""
         # Submit a score
         score_data = {
-            'game': 'test-game',
+            'player_name': 'persistence_test',
             'score': 150,
-            'player': 'persistence_test'
+            'level': 2,
+            'threats_found': 5,
+            'accuracy': 95
         }
         
-        submit_response = client.post('/api/scores',
+        submit_response = client.post('/api/game/submit-score',
                                     data=json.dumps(score_data),
                                     content_type='application/json')
-        assert submit_response.status_code == 201
+        assert submit_response.status_code == 200
         
         # Check leaderboard
         leaderboard_response = client.get('/api/leaderboard')
@@ -186,8 +194,8 @@ class TestDataPersistence:
         
         leaderboard_data = json.loads(leaderboard_response.data)
         # Should find our submitted score
-        found_score = any(score['player'] == 'persistence_test' 
-                         for score in leaderboard_data)
+        found_score = any(score['name'] == 'persistence_test' 
+                         for score in leaderboard_data['leaderboard'])
         assert found_score, "Submitted score not found in leaderboard"
 
 class TestSecurity:
@@ -206,7 +214,7 @@ class TestSecurity:
         """Simulate rapid requests to test rate limiting"""
         responses = []
         for i in range(20):
-            response = client.get('/api/scenarios')
+            response = client.get('/api/game/scenarios')
             responses.append(response.status_code)
         
         # Should not crash under load
