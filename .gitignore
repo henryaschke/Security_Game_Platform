@@ -86,4 +86,16 @@ package-lock.json
 
 # 🛠️ Build artifacts
 *.tar.gz
-*.zip 
+*.zip
+
+# 🔬 CI/CD and Testing Reports
+test-results/
+test_results/
+reports/
+security-results/
+trivy-results.sarif
+bandit-report.json
+safety-report.json
+eslint-report.json
+zap-report.html
+*.sarif 
