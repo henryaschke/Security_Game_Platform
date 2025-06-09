@@ -13,53 +13,33 @@ automatic_scaling:
   max_instances: 3
   target_cpu_utilization: 0.6
 
-# 🛡️ Security Headers
+# 🛡️ Simplified Handlers  
 handlers:
-  # Static assets with security headers
-  - url: /favicon.ico
-    static_files: favicon.ico
-    upload: favicon.ico
-
+  # Static files
   - url: /(.*\.(css|js|png|jpg|jpeg|gif|ico|svg))$
     static_files: \1
     upload: .*\.(css|js|png|jpg|jpeg|gif|ico|svg)
     secure: always
-    redirect_http_response_code: 301
-    http_headers:
-      Strict-Transport-Security: "max-age=31536000; includeSubDomains"
-      X-Content-Type-Options: "nosniff"
-      X-Frame-Options: "DENY"
-      X-XSS-Protection: "1; mode=block"
-      Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'"
-      Referrer-Policy: "strict-origin-when-cross-origin"
-      Permissions-Policy: "geolocation=(), microphone=(), camera=()"
 
-  # HTML files with security headers
   - url: /(.*\.html)$
     static_files: \1
     upload: .*\.html
     secure: always
-    redirect_http_response_code: 301
-    http_headers:
-      Strict-Transport-Security: "max-age=31536000; includeSubDomains"
-      X-Content-Type-Options: "nosniff"
-      X-Frame-Options: "DENY"
-      X-XSS-Protection: "1; mode=block"
-      Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'"
-      Referrer-Policy: "strict-origin-when-cross-origin"
-      Permissions-Policy: "geolocation=(), microphone=(), camera=()"
 
   # API endpoints
   - url: /api/.*
     script: auto
     secure: always
-    redirect_http_response_code: 301
+
+  # Health check
+  - url: /health
+    script: auto
+    secure: always
 
   # Root and fallback
   - url: /.*
     script: auto
     secure: always
-    redirect_http_response_code: 301
 
 # 🌍 Environment Variables
 env_variables:
@@ -69,10 +49,7 @@ env_variables:
   FLASK_ENV: "production"
   PYTHONPATH: "/srv"
 
-# 🔒 Network Security
-vpc_access_connector:
-  # Uncomment if using VPC
-  # name: "projects/PROJECT_ID/locations/REGION/connectors/CONNECTOR_NAME"
+# 🔒 Network Security - VPC not used for this deployment
 
 # 📊 Health Checks
 readiness_check:
@@ -89,7 +66,4 @@ liveness_check:
   failure_threshold: 4
   success_threshold: 2
 
-# Network configuration
-network:
-  forwarded_ports:
-    - 8080 
+# Network configuration removed - not needed for standard App Engine 
