@@ -1,69 +1,9 @@
 runtime: python311
-
-# Main application entry point
 entrypoint: gunicorn -b :$PORT game_server:app
 
-# 🚀 Production Configuration for Cyber Ninja Academy
-service: default
-
-# ⚡ Instance Configuration
-instance_class: F1
-automatic_scaling:
-  min_instances: 1
-  max_instances: 3
-  target_cpu_utilization: 0.6
-
-# 🛡️ Simplified Handlers  
-handlers:
-  # Static files
-  - url: /(.*\.(css|js|png|jpg|jpeg|gif|ico|svg))$
-    static_files: \1
-    upload: .*\.(css|js|png|jpg|jpeg|gif|ico|svg)
-    secure: always
-
-  - url: /(.*\.html)$
-    static_files: \1
-    upload: .*\.html
-    secure: always
-
-  # API endpoints
-  - url: /api/.*
-    script: auto
-    secure: always
-
-  # Health check
-  - url: /health
-    script: auto
-    secure: always
-
-  # Root and fallback
-  - url: /.*
-    script: auto
-    secure: always
-
-# 🌍 Environment Variables
 env_variables:
   ENVIRONMENT: "production"
-  DEBUG: "False"
-  SECRET_KEY: "production-secret-key-change-me"
-  FLASK_ENV: "production"
-  PYTHONPATH: "/srv"
 
-# 🔒 Network Security - VPC not used for this deployment
-
-# 📊 Health Checks
-readiness_check:
-  path: "/health"
-  check_interval_sec: 10
-  timeout_sec: 4
-  failure_threshold: 2
-  success_threshold: 2
-
-liveness_check:
-  path: "/health"
-  check_interval_sec: 30
-  timeout_sec: 4
-  failure_threshold: 4
-  success_threshold: 2
-
-# Network configuration removed - not needed for standard App Engine 
+handlers:
+- url: /.*
+  script: auto 
