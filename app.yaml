@@ -1,7 +1,7 @@
 runtime: python311
 
 # Main application entry point
-entrypoint: python game_server.py
+entrypoint: gunicorn -b :$PORT game_server:app
 
 # 🚀 Production Configuration for Cyber Ninja Academy
 service: default

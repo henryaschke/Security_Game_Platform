@@ -12,4 +12,5 @@ pytest-html==4.1.1
 pytest-json-report==1.5.0
 flask-testing==0.8.1
 bandit==1.7.5
-safety==2.3.5 
+safety==2.3.5
+gunicorn==21.2.0 

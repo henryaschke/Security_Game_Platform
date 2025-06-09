@@ -245,11 +245,18 @@ jobs:
       - name: 🚀 Deploy to App Engine
         run: |
           cd dist/
+          echo "📋 Files in dist:"
+          ls -la
+          echo "📝 app.yaml content:"
+          cat app.yaml
+          echo "🚀 Starting deployment with debug logging..."
           gcloud app deploy app.yaml \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --version=v$(date +%Y%m%d-%H%M%S) \
             --promote \
-            --quiet
+            --quiet \
+            --verbosity=debug \
+            --log-http
 
       - name: 🏥 Health Check
         run: |

@@ -1,8 +1,15 @@
 # 🛡️ Security - Never commit these files
 *.key
-*.json
 cyber-ninja-key.json
 service-account-*.json
+*-key.json
+secrets.json
+config.json
+credentials.json
+
+# Allow package.json and package-lock.json for Node.js
+!package.json
+!package-lock.json
 
 # 🐍 Python
 __pycache__/
