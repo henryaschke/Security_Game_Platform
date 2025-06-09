@@ -13,8 +13,17 @@ gcloud projects add-iam-policy-binding %PROJECT_ID% --member=serviceAccount:%SA_
 echo Adding Cloud Build editor role...
 gcloud projects add-iam-policy-binding %PROJECT_ID% --member=serviceAccount:%SA_EMAIL% --role=roles/cloudbuild.builds.editor
 
+echo Adding Cloud Build builder role...
+gcloud projects add-iam-policy-binding %PROJECT_ID% --member=serviceAccount:%SA_EMAIL% --role=roles/cloudbuild.builds.builder
+
+echo Adding Source admin role...
+gcloud projects add-iam-policy-binding %PROJECT_ID% --member=serviceAccount:%SA_EMAIL% --role=roles/source.admin
+
 echo Adding Storage admin role...
 gcloud projects add-iam-policy-binding %PROJECT_ID% --member=serviceAccount:%SA_EMAIL% --role=roles/storage.admin
 
-echo Setup complete! Your service account now has the required Cloud Run permissions.
+echo Adding Service Usage admin role...
+gcloud projects add-iam-policy-binding %PROJECT_ID% --member=serviceAccount:%SA_EMAIL% --role=roles/serviceusage.serviceUsageAdmin
+
+echo Setup complete! Your service account now has all required Cloud Run permissions.
 pause 
