@@ -2,7 +2,7 @@
 
 **Test Timestamp:** $(date)
 **Branch:** main
-**Target:** Production App Engine
+**Target:** Production Cloud Run
 **URL:** https://capstone-henry.appspot.com
 
 ## 🚀 Pipeline Stages Being Tested:
@@ -25,7 +25,7 @@
    - Artifact creation
 
 4. **🚀 Deploy**
-   - App Engine production deployment
+   - Cloud Run production deployment
    - Health checks
    - Smoke testing
 

@@ -2,12 +2,14 @@
 
 ![Security Badge](https://img.shields.io/badge/security-DevSecOps-green.svg)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)
-![Platform](https://img.shields.io/badge/platform-GCP%20App%20Engine-orange.svg)
+![Platform](https://img.shields.io/badge/platform-GCP%20Cloud%20Run-orange.svg)
 ![License](https://img.shields.io/badge/license-MIT-purple.svg)
 
 ## 🌟 Overview
 
 Welcome to the **Cyber Ninja Academy** - an interactive cybersecurity training platform that transforms learning security concepts into an engaging, game-based experience. Built with a dark ninja-themed UI and comprehensive DevSecOps practices.
+
+> 🔄 **Migration Note**: This project has been updated to deploy on Google Cloud Run instead of App Engine for better containerization, scalability, and cost efficiency.
 
 ## ✨ Features
 
@@ -26,7 +28,7 @@ Welcome to the **Cyber Ninja Academy** - an interactive cybersecurity training p
 ### 🚀 DevSecOps Pipeline
 - **Multi-stage Security Scanning**: Trivy, CodeQL, ESLint, Bandit, OWASP ZAP
 - **Automated Testing**: Unit, integration, and security tests
-- **Infrastructure as Code**: GCP App Engine deployment
+- **Infrastructure as Code**: GCP Cloud Run deployment
 - **Environment Separation**: Staging and production workflows
 
 ## 🏗️ Architecture

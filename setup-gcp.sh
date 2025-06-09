@@ -34,18 +34,11 @@ gcloud config set project "$PROJECT_ID"
 
 # Enable required APIs
 echo -e "${YELLOW}🔧 Enabling required APIs...${NC}"
-gcloud services enable appengine.googleapis.com
 gcloud services enable cloudbuild.googleapis.com
+gcloud services enable run.googleapis.com
 gcloud services enable containerregistry.googleapis.com
 
-# Create App Engine application
-echo -e "${YELLOW}🔧 Creating App Engine application...${NC}"
-if ! gcloud app describe &> /dev/null; then
-    gcloud app create --region=us-central1
-    echo -e "${GREEN}✅ App Engine application created${NC}"
-else
-    echo -e "${GREEN}✅ App Engine application already exists${NC}"
-fi
+echo -e "${GREEN}✅ APIs enabled for Cloud Run deployment${NC}"
 
 # Create service account
 SERVICE_ACCOUNT="cyber-ninja-deploy"
@@ -64,10 +57,10 @@ fi
 # Grant IAM roles
 echo -e "${YELLOW}🔧 Granting IAM roles...${NC}"
 ROLES=(
-    "roles/appengine.deployer"
-    "roles/appengine.serviceAdmin"
-    "roles/storage.admin"
+    "roles/run.admin"
     "roles/cloudbuild.builds.editor"
+    "roles/storage.admin"
+    "roles/iam.serviceAccountUser"
 )
 
 for role in "${ROLES[@]}"; do

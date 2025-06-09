@@ -1,9 +1,0 @@
-runtime: python311
-entrypoint: gunicorn -b :$PORT game_server:app
-
-env_variables:
-  ENVIRONMENT: "production"
-
-handlers:
-- url: /.*
-  script: auto 

@@ -1,4 +1,4 @@
-name: 🛡️ DevSecOps CI/CD Pipeline
+name: 🛡️ DevSecOps CI/CD Pipeline (Cloud Run)
 
 on:
   push:
@@ -199,7 +199,7 @@ jobs:
           
           # Copy config files
           cp requirements.txt dist/
-          cp app.yaml dist/
+          cp Dockerfile dist/
           
           # Create version info
           echo "BUILD_VERSION=$(date +%Y%m%d-%H%M%S)" > dist/version.txt
@@ -217,7 +217,91 @@ jobs:
           name: application-build
           path: dist/
 
-  # 🚀 STAGE 4: Deploy to Production
+  # 🚀 STAGE 4A: Deploy to Staging
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build-application
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+    
+    steps:
+      - name: 📦 Download Build
+        uses: actions/download-artifact@v4
+        with:
+          name: application-build
+          path: dist/
+
+      - name: 🔐 Setup GCP Auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: ☁️ Setup GCP SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+
+      - name: 🔧 Enable Required APIs
+        run: |
+          gcloud services enable cloudbuild.googleapis.com
+          gcloud services enable run.googleapis.com
+          gcloud services enable containerregistry.googleapis.com
+
+      - name: 🚀 Deploy to Cloud Run (Staging)
+        run: |
+          cd dist/
+          echo "📋 Files in dist:"
+          ls -la
+          echo "📝 Dockerfile content:"
+          cat Dockerfile
+          echo "🚀 Starting Cloud Run staging deployment..."
+          
+          # Set variables
+          SERVICE_NAME="cyber-ninja-academy-staging"
+          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
+          VERSION="staging-v$(date +%Y%m%d-%H%M%S)"
+          
+          # Build and push container image
+          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} .
+          
+          # Deploy to Cloud Run
+          gcloud run deploy ${SERVICE_NAME} \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} \
+            --platform managed \
+            --region ${REGION} \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 512Mi \
+            --cpu 1 \
+            --max-instances 3 \
+            --project ${{ secrets.GCP_PROJECT_ID }} \
+            --quiet
+
+      - name: 🔗 Get Staging URL
+        id: get-url
+        run: |
+          SERVICE_NAME="cyber-ninja-academy-staging"
+          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
+          SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} \
+            --platform managed \
+            --region ${REGION} \
+            --format 'value(status.url)' \
+            --project ${{ secrets.GCP_PROJECT_ID }})
+          echo "SERVICE_URL=${SERVICE_URL}" >> $GITHUB_OUTPUT
+          echo "🌐 Staging URL: ${SERVICE_URL}"
+
+      - name: 🏥 Staging Health Check
+        run: |
+          sleep 30
+          curl -f "${{ steps.get-url.outputs.SERVICE_URL }}/health"
+          echo "✅ Staging deployment successful!"
+
+      - name: 📝 Staging Summary
+        run: |
+          echo "🎉 Staging URL: ${{ steps.get-url.outputs.SERVICE_URL }}"
+
+  # 🚀 STAGE 4B: Deploy to Production
   deploy-production:
     name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
@@ -242,31 +326,64 @@ jobs:
         with:
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
 
-      - name: 🚀 Deploy to App Engine
+      - name: 🔧 Enable Required APIs
+        run: |
+          gcloud services enable cloudbuild.googleapis.com
+          gcloud services enable run.googleapis.com
+          gcloud services enable containerregistry.googleapis.com
+
+      - name: 🚀 Deploy to Cloud Run
         run: |
           cd dist/
           echo "📋 Files in dist:"
           ls -la
-          echo "📝 app.yaml content:"
-          cat app.yaml
-          echo "🚀 Starting deployment with debug logging..."
-          gcloud app deploy app.yaml \
-            --project=${{ secrets.GCP_PROJECT_ID }} \
-            --version=v$(date +%Y%m%d-%H%M%S) \
-            --promote \
-            --quiet \
-            --verbosity=debug \
-            --log-http
+          echo "📝 Dockerfile content:"
+          cat Dockerfile
+          echo "🚀 Starting Cloud Run deployment..."
+          
+          # Set variables
+          SERVICE_NAME="cyber-ninja-academy"
+          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
+          VERSION="v$(date +%Y%m%d-%H%M%S)"
+          
+          # Build and push container image
+          gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} .
+          
+          # Deploy to Cloud Run
+          gcloud run deploy ${SERVICE_NAME} \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} \
+            --platform managed \
+            --region ${REGION} \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 512Mi \
+            --cpu 1 \
+            --max-instances 10 \
+            --project ${{ secrets.GCP_PROJECT_ID }} \
+            --quiet
+
+      - name: 🔗 Get Service URL
+        id: get-url
+        run: |
+          SERVICE_NAME="cyber-ninja-academy"
+          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
+          SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} \
+            --platform managed \
+            --region ${REGION} \
+            --format 'value(status.url)' \
+            --project ${{ secrets.GCP_PROJECT_ID }})
+          echo "SERVICE_URL=${SERVICE_URL}" >> $GITHUB_OUTPUT
+          echo "🌐 Service URL: ${SERVICE_URL}"
 
       - name: 🏥 Health Check
         run: |
           sleep 30
-          curl -f "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health"
+          curl -f "${{ steps.get-url.outputs.SERVICE_URL }}/health"
           echo "✅ Deployment successful!"
 
       - name: 📝 Summary
         run: |
-          echo "🎉 Production URL: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com"
+          echo "🎉 Production URL: ${{ steps.get-url.outputs.SERVICE_URL }}"
 
   # 🔐 STAGE 5: Security Monitoring
   security-monitoring:
@@ -276,17 +393,40 @@ jobs:
     if: github.ref == 'refs/heads/main'
     
     steps:
+      - name: ☁️ Setup GCP SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+
+      - name: 🔐 Setup GCP Auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: 🔗 Get Service URL
+        id: get-url
+        run: |
+          SERVICE_NAME="cyber-ninja-academy"
+          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
+          SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} \
+            --platform managed \
+            --region ${REGION} \
+            --format 'value(status.url)' \
+            --project ${{ secrets.GCP_PROJECT_ID }})
+          echo "SERVICE_URL=${SERVICE_URL}" >> $GITHUB_OUTPUT
+          echo "🌐 Service URL: ${SERVICE_URL}"
+
       - name: 🌐 SSL/Security Check
         run: |
           echo "🔐 Checking SSL and security headers..."
-          curl -I "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" | grep -E "(X-Frame-Options|X-Content-Type-Options|Strict-Transport-Security)" || echo "Headers checked"
+          curl -I "${{ steps.get-url.outputs.SERVICE_URL }}" | grep -E "(X-Frame-Options|X-Content-Type-Options|Strict-Transport-Security)" || echo "Headers checked"
 
       - name: 📊 Performance Test
         run: |
           echo "⚡ Testing performance..."
           for i in {1..3}; do
             start=$(date +%s%N)
-            curl -f "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health"
+            curl -f "${{ steps.get-url.outputs.SERVICE_URL }}/health"
             end=$(date +%s%N)
             duration=$(( (end - start) / 1000000 ))
             echo "Health check $i: ${duration}ms"
@@ -295,4 +435,4 @@ jobs:
       - name: 🎯 Final Summary
         run: |
           echo "🛡️ Security monitoring complete!"
-          echo "🔗 Production: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" 
+          echo "🔗 Production: ${{ steps.get-url.outputs.SERVICE_URL }}" 

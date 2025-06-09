@@ -45,13 +45,14 @@ gcloud iam service-accounts keys create cyber-ninja-key.json \
     --iam-account=cyber-ninja-deploy@YOUR_PROJECT_ID.iam.gserviceaccount.com
 ```
 
-### 3. 📱 App Engine Setup
+### 3. ☁️ Cloud Run Setup
 ```bash
-# Enable App Engine API
-gcloud services enable appengine.googleapis.com
+# Enable required APIs
+gcloud services enable cloudbuild.googleapis.com
+gcloud services enable run.googleapis.com
+gcloud services enable containerregistry.googleapis.com
 
-# Create App Engine application
-gcloud app create --region=us-central1
+# Note: Cloud Run services are created automatically during deployment
 ```
 
 ## 🔒 GitHub Secrets Configuration
@@ -62,6 +63,7 @@ Navigate to your GitHub repository → Settings → Secrets and variables → Ac
 ```
 GCP_PROJECT_ID = your-gcp-project-id
 GCP_SA_KEY = [Contents of cyber-ninja-key.json file]
+GCP_REGION = us-central1  # Optional: defaults to us-central1
 SLACK_WEBHOOK = [Optional: Your Slack webhook URL for notifications]
 ```
 
@@ -75,14 +77,14 @@ SLACK_WEBHOOK = [Optional: Your Slack webhook URL for notifications]
 ### Main Branch (`main`)
 - **Purpose**: Production deployments
 - **Triggers**: Push to main branch
-- **Environment**: Production App Engine
-- **URL**: `https://YOUR_PROJECT_ID.appspot.com`
+- **Environment**: Production Cloud Run
+- **URL**: Generated after deployment (e.g., `https://cyber-ninja-academy-<hash>-uc.a.run.app`)
 
 ### Development Branch (`develop`)
 - **Purpose**: Staging deployments
 - **Triggers**: Push to develop branch
-- **Environment**: Staging App Engine service
-- **URL**: `https://cyber-ninja-academy-staging-dot-YOUR_PROJECT_ID.appspot.com`
+- **Environment**: Staging Cloud Run service
+- **URL**: Generated after deployment (e.g., `https://cyber-ninja-academy-staging-<hash>-uc.a.run.app`)
 
 ### Feature Branches
 - **Purpose**: Development and testing
@@ -166,11 +168,13 @@ act -j test
 
 ### Rollback Production
 ```bash
-# List previous versions
-gcloud app versions list
+# List previous Cloud Run revisions
+gcloud run revisions list --service=cyber-ninja-academy --platform=managed --region=us-central1
 
-# Rollback to previous version
-gcloud app services set-traffic default --splits=PREVIOUS_VERSION=1
+# Rollback to previous revision
+gcloud run services update-traffic cyber-ninja-academy \
+    --to-revisions=PREVIOUS_REVISION=100 \
+    --platform=managed --region=us-central1
 ```
 
 ### Security Incident Response
@@ -182,10 +186,11 @@ gcloud app services set-traffic default --splits=PREVIOUS_VERSION=1
 
 ## 📈 Performance Optimization
 
-### App Engine Configuration
-- **Instance Class**: F2 (production), F1 (staging)
-- **Auto Scaling**: 1-10 instances (production), 0-3 (staging)
-- **CPU Utilization**: 60% target (production), 80% (staging)
+### Cloud Run Configuration
+- **Memory**: 512Mi (configurable)
+- **CPU**: 1 vCPU (configurable)
+- **Auto Scaling**: 0-10 instances (production), 0-3 (staging)
+- **Concurrency**: 80 requests per instance
 
 ### Security Headers
 All responses include:
@@ -202,11 +207,11 @@ All responses include:
 
 #### Deployment Fails
 ```bash
-# Check App Engine logs
-gcloud app logs tail -s default
+# Check Cloud Run logs
+gcloud logs tail projects/YOUR_PROJECT_ID/logs/run.googleapis.com%2Frequests
 
 # Check deployment status
-gcloud app versions list
+gcloud run services list --platform=managed --region=us-central1
 ```
 
 #### Security Scan Failures
@@ -215,8 +220,8 @@ gcloud app versions list
 - Update dependencies if needed
 
 #### Performance Issues
-- Monitor App Engine metrics in GCP Console
-- Adjust instance configuration if needed
+- Monitor Cloud Run metrics in GCP Console
+- Adjust memory/CPU configuration if needed
 - Review application logs for bottlenecks
 
 ## 📞 Support
@@ -240,12 +245,14 @@ gcloud app versions list
 
 - [ ] GCP project created and configured
 - [ ] Service account created with proper permissions
-- [ ] GitHub secrets configured
-- [ ] App Engine application created
+- [ ] GitHub secrets configured (including GCP_REGION)
+- [ ] Cloud Run APIs enabled
 - [ ] Repository branches (main/develop) set up
 - [ ] First deployment tested on staging
 - [ ] Security scans passing
 - [ ] Production deployment successful
 - [ ] Monitoring and alerts configured
 
-**🥷 Your Cyber Ninja Academy is now ready for secure, automated deployments!** 
+> 📖 **Migrating from App Engine?** Check the [Migration Guide](MIGRATION_GUIDE.md) for step-by-step instructions.
+
+**🥷 Your Cyber Ninja Academy is now ready for secure, automated Cloud Run deployments!** 

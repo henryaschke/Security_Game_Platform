@@ -1,5 +1,5 @@
 # 🥷 Cyber Ninja Academy - Secure Container
-FROM python:3.11-slim-bullseye
+FROM python:3.11-slim
 
 # 🛡️ Security: Create non-root user
 RUN groupadd -r appgroup && useradd -r -g appgroup appuser
@@ -41,4 +41,6 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8080/health || exit 1
 
 # 🚀 Start the application
-CMD ["python", "game_server.py"] 
+ENV PORT=8080
+ENV ENVIRONMENT=production
+CMD gunicorn -b :$PORT game_server:app 
