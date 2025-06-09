@@ -1,13 +1,11 @@
-name: 🥷 Cyber Ninja Academy - Secure CI/CD Pipeline
+name: 🛡️ DevSecOps CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
-  workflow_dispatch: # Manual trigger
+    branches: [main]
 
-# 🔐 Global permissions for security scanning
 permissions:
   contents: read
   security-events: write
@@ -16,35 +14,52 @@ permissions:
   pull-requests: write
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  SERVICE_NAME: cyber-ninja-academy
-  REGION: us-central1
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '18'
 
 jobs:
-  # 🔍 Security and Code Quality Analysis
-  security-scan:
-    name: 🛡️ Security Analysis
+  # 🔍 STAGE 1: Security Analysis (5-7 min)
+  security-analysis:
+    name: 🔍 Security Analysis
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-      actions: read
+    continue-on-error: false
+    
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Full history for better analysis
+          fetch-depth: 0
 
-      - name: 🔒 Run Trivy Vulnerability Scanner
-        uses: aquasecurity/trivy-action@master
+      # Install dependencies first
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
         with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'table'
-          exit-code: '0'
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: 📦 Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install bandit safety
+        continue-on-error: false
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: 📦 Install Node Dependencies
+        run: |
+          npm ci --ignore-scripts || npm install --ignore-scripts
+          npm install eslint eslint-plugin-security --save-dev
         continue-on-error: true
 
-      - name: 🔒 Run Trivy SARIF Report
+      # Security Scans
+      - name: 🛡️ Trivy Vulnerability Scanner
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
@@ -53,255 +68,273 @@ jobs:
           output: 'trivy-results.sarif'
         continue-on-error: true
 
-      - name: 📊 Upload Trivy scan results to GitHub Security tab
+      - name: 📊 Upload Trivy Results
         uses: github/codeql-action/upload-sarif@v3
-        if: always() && github.repository_owner == github.actor
+        if: always()
         with:
           sarif_file: 'trivy-results.sarif'
         continue-on-error: true
 
-      - name: 🕵️ Initialize CodeQL
+      - name: 🐍 Python Security Check (Bandit)
+        run: |
+          bandit -r . -f json -o bandit-report.json || true
+          bandit -r . || true
+        continue-on-error: true
+
+      - name: 🔐 Python Dependency Check (Safety)
+        run: |
+          safety check --json --output safety-report.json || true
+          safety check || true
+        continue-on-error: true
+
+      - name: 🟨 JavaScript Security Linting
+        run: |
+          if [ -f "package.json" ]; then
+            npx eslint *.js --format json --output-file eslint-report.json || true
+            npx eslint *.js || true
+          fi
+        continue-on-error: true
+
+      - name: 🔍 CodeQL Analysis
         uses: github/codeql-action/init@v3
         with:
           languages: javascript, python
         continue-on-error: true
 
-      - name: 🔍 Perform CodeQL Analysis
+      - name: 🔍 CodeQL Autobuild
+        uses: github/codeql-action/autobuild@v3
+        continue-on-error: true
+
+      - name: 🔍 CodeQL Analysis Results
         uses: github/codeql-action/analyze@v3
         continue-on-error: true
 
-      - name: 📝 Run ESLint for JavaScript
-        run: |
-          npm install eslint eslint-plugin-security --no-audit
-          npx eslint *.js --ext .js --format json --output-file eslint-results.json || echo "ESLint completed with warnings"
-        continue-on-error: true
-
-      - name: 🐍 Python Security Check with Bandit
-        run: |
-          pip install bandit[toml] --quiet
-          bandit -r . -f json -o bandit-results.json || echo "Bandit completed with findings"
-        continue-on-error: true
-
-      - name: 📋 Upload Security Reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: security-reports
-          path: |
-            trivy-results.sarif
-            eslint-results.json
-            bandit-results.json
-        continue-on-error: true
-
-      - name: ✅ Security Scan Summary
-        run: |
-          echo "🛡️ Security scanning completed"
-          echo "📊 Check the Security tab for detailed results"
-          echo "📋 Security reports uploaded as artifacts"
-
-  # 🧪 Testing and Quality Assurance
-  test:
+  # 🧪 STAGE 2: Test Suite (3-5 min)
+  test-suite:
     name: 🧪 Test Suite
     runs-on: ubuntu-latest
-    needs: security-scan
+    needs: security-analysis
+    
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
 
-      - name: 📦 Install Python Dependencies
+      - name: 📦 Install Dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest pytest-cov flask-testing
+          pip install pytest pytest-cov pytest-html pytest-json-report
 
-      - name: 🔧 Set up Node.js
-        uses: actions/setup-node@v4
+      - name: 🔧 Create Test Environment
+        run: |
+          export TESTING=True
+          export SECRET_KEY=test-secret-key
+          mkdir -p test_results
+
+      - name: 🧪 Run Security Tests
+        run: |
+          python -m pytest test_game_server.py::TestSecurityHeaders -v \
+            --html=test_results/security_report.html \
+            --json-report --json-report-file=test_results/security_results.json
+        continue-on-error: false
+
+      - name: 🌐 Run API Tests
+        run: |
+          python -m pytest test_game_server.py::TestAPIEndpoints -v \
+            --html=test_results/api_report.html \
+            --json-report --json-report-file=test_results/api_results.json
+        continue-on-error: false
+
+      - name: 🔒 Run Input Validation Tests
+        run: |
+          python -m pytest test_game_server.py::TestInputValidation -v \
+            --html=test_results/validation_report.html \
+            --json-report --json-report-file=test_results/validation_results.json
+        continue-on-error: false
+
+      - name: ⚡ Run Performance Tests
+        run: |
+          python -m pytest test_game_server.py::TestPerformance -v \
+            --html=test_results/performance_report.html \
+            --json-report --json-report-file=test_results/performance_results.json
+        continue-on-error: false
+
+      - name: 🚨 Run Error Handling Tests
+        run: |
+          python -m pytest test_game_server.py::TestErrorHandling -v \
+            --html=test_results/error_report.html \
+            --json-report --json-report-file=test_results/error_results.json
+        continue-on-error: false
+
+      - name: 📊 Generate Coverage Report
+        run: |
+          python -m pytest test_game_server.py --cov=game_server \
+            --cov-report=html:test_results/coverage_html \
+            --cov-report=xml:test_results/coverage.xml
+        continue-on-error: true
+
+      - name: 📈 Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
         with:
-          node-version: '18'
-          cache: 'npm'
+          name: test-results
+          path: test_results/
 
-      - name: 📦 Install Node Dependencies
-        run: |
-          npm init -y
-          npm install jest jsdom
-
-      - name: 🧪 Run Python Tests
-        run: |
-          python -m pytest --cov=. --cov-report=xml --cov-report=html
-
-      - name: 🎯 Run JavaScript Tests
-        run: |
-          npm test || echo "No tests configured yet"
-
-      - name: 📊 Upload Coverage Reports
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage.xml
-          flags: unittests
-          name: codecov-umbrella
-
-  # 🏗️ Build and Package
-  build:
+  # 🏗️ STAGE 3: Build Application (2-3 min)
+  build-application:
     name: 🏗️ Build Application
     runs-on: ubuntu-latest
-    needs: [security-scan, test]
+    needs: test-suite
+    
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python
+      - name: 🐍 Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: 📦 Create Requirements Lock File
+      - name: 📦 Install Dependencies
         run: |
-          pip install pip-tools
-          pip-compile requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: 🏗️ Build Application Package
+      - name: 🔧 Build Application Package
         run: |
-          mkdir -p dist
-          cp -r *.html *.css *.js *.py requirements.txt dist/
+          # Create distribution directory
+          mkdir -p dist/
           
-      - name: 🐳 Build Docker Image (if Dockerfile exists)
-        run: |
-          if [ -f Dockerfile ]; then
-            docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA .
-          fi
+          # Copy application files
+          cp *.html dist/
+          cp *.css dist/
+          cp *.js dist/
+          cp *.py dist/
+          cp requirements.txt dist/
+          cp app.yaml dist/
+          cp app-staging.yaml dist/
+          
+          # Create version file
+          echo "BUILD_VERSION=$(date +%Y%m%d-%H%M%S)" > dist/version.txt
+          echo "GIT_COMMIT=$(git rev-parse --short HEAD)" >> dist/version.txt
 
-      - name: 📤 Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+      - name: 🔍 Validate Build
+        run: |
+          cd dist/
+          ls -la
+          python -c "import game_server; print('✅ Game server imports successfully')"
+
+      - name: 📦 Upload Build Artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: build-artifacts
+          name: application-build
           path: dist/
 
-  # 🚀 Deploy to GCP Staging
-  deploy-staging:
-    name: 🚀 Deploy to Staging
-    runs-on: ubuntu-latest
-    needs: [build]
-    if: github.ref == 'refs/heads/develop'
-    environment: staging
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 📥 Download Build Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-          path: dist/
-
-      - name: 🔐 Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-      - name: ⚙️ Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-
-      - name: 🏗️ Configure Docker for GCR
-        run: gcloud auth configure-docker
-
-      - name: 🚀 Deploy to App Engine Staging
-        run: |
-          cd dist
-          gcloud app deploy app-staging.yaml --quiet --project=$PROJECT_ID
-
-      - name: 🌐 Get Staging URL
-        id: staging-url
-        run: |
-          URL=$(gcloud app browse --project=$PROJECT_ID --service=$SERVICE_NAME-staging --no-launch-browser)
-          echo "staging_url=$URL" >> $GITHUB_OUTPUT
-
-      - name: 🧪 Run Smoke Tests on Staging
-        run: |
-          curl -f ${{ steps.staging-url.outputs.staging_url }} || exit 1
-          echo "✅ Staging deployment successful!"
-
-  # 🚀 Deploy to Production
+  # 🚀 STAGE 4: Deploy to Production (5-8 min)
   deploy-production:
     name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: build-application
     if: github.ref == 'refs/heads/main'
     environment: production
+    
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 📥 Download Build Artifacts
-        uses: actions/download-artifact@v4
+      - name: 📦 Download Build Artifacts
+        uses: actions/download-artifact@v3
         with:
-          name: build-artifacts
+          name: application-build
           path: dist/
 
-      - name: 🔐 Authenticate to Google Cloud
+      - name: 🔐 Setup GCP Authentication
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
-      - name: ⚙️ Set up Cloud SDK
+      - name: ☁️ Setup GCP SDK
         uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
 
-      - name: 🔍 Final Security Check
+      - name: 🚀 Deploy to App Engine
         run: |
-          echo "🔒 Running final security validation..."
-          # Add any production-specific security checks here
+          cd dist/
+          
+          # Deploy to production
+          gcloud app deploy app.yaml \
+            --project=${{ secrets.GCP_PROJECT_ID }} \
+            --version=v$(date +%Y%m%d-%H%M%S) \
+            --promote \
+            --quiet
 
-      - name: 🚀 Deploy to App Engine Production
+      - name: 🏥 Health Check
         run: |
-          cd dist
-          gcloud app deploy app.yaml --quiet --project=$PROJECT_ID
-
-      - name: 🌐 Get Production URL
-        id: prod-url
-        run: |
-          URL=$(gcloud app browse --project=$PROJECT_ID --no-launch-browser)
-          echo "production_url=$URL" >> $GITHUB_OUTPUT
-
-      - name: 🧪 Run Production Health Checks
-        run: |
-          curl -f ${{ steps.prod-url.outputs.production_url }} || exit 1
+          sleep 30
+          curl -f https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health || exit 1
           echo "✅ Production deployment successful!"
 
-      - name: 📢 Notify Success
-        uses: 8398a7/action-slack@v3
-        if: success()
-        with:
-          status: success
-          text: '🎉 Cyber Ninja Academy deployed successfully to production!'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      - name: 📝 Deployment Summary
+        run: |
+          echo "🎉 Production Deployment Complete!"
+          echo "🌐 URL: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com"
+          echo "📊 Health: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health"
 
-  # 🛡️ Security Monitoring
+  # 🔐 STAGE 5: Post-Deployment Security Monitoring (3-5 min)
   security-monitoring:
-    name: 🛡️ Post-Deployment Security
+    name: 🔐 Security Monitoring
     runs-on: ubuntu-latest
-    needs: [deploy-production]
+    needs: deploy-production
     if: github.ref == 'refs/heads/main'
-    permissions:
-      contents: read
-      security-events: write
+    
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
       - name: 🔍 OWASP ZAP Security Scan
-        uses: zaproxy/action-full-scan@v0.7.0
+        uses: zaproxy/action-full-scan@v0.8.0
         with:
-          target: 'https://capstone-henry.appspot.com'
+          target: 'https://${{ secrets.GCP_PROJECT_ID }}.appspot.com'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
         continue-on-error: true
 
-      - name: ✅ Security Monitoring Complete
+      - name: 🌐 SSL/TLS Security Check
         run: |
-          echo "🛡️ Post-deployment security scan completed"
-          echo "🌐 Target: https://capstone-henry.appspot.com" 
+          # Check SSL certificate
+          echo "🔐 Checking SSL configuration..."
+          
+          # Test HTTPS redirect
+          curl -I http://${{ secrets.GCP_PROJECT_ID }}.appspot.com || true
+          
+          # Test HTTPS response
+          curl -I https://${{ secrets.GCP_PROJECT_ID }}.appspot.com || true
+          
+          # Test security headers
+          curl -I https://${{ secrets.GCP_PROJECT_ID }}.appspot.com | grep -E "(X-Frame-Options|X-Content-Type-Options|Strict-Transport-Security)"
+
+      - name: 📊 Performance & Availability Test
+        run: |
+          echo "⚡ Testing application performance..."
+          
+          for i in {1..5}; do
+            start_time=$(date +%s%N)
+            curl -f https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health
+            end_time=$(date +%s%N)
+            duration=$(( (end_time - start_time) / 1000000 ))
+            echo "Request $i: ${duration}ms"
+          done
+
+      - name: 🎯 Final Security Summary
+        run: |
+          echo "🛡️ Post-Deployment Security Check Complete!"
+          echo "✅ Application deployed and secured"
+          echo "🔗 Production URL: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" 

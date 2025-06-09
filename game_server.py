@@ -259,6 +259,16 @@ def get_hints(level):
         "hints": hints
     })
 
+@app.route('/health')
+def health_check_simple():
+    """Health check endpoint for App Engine"""
+    return jsonify({
+        "status": "healthy",
+        "service": "Cyber Ninja Academy",
+        "version": "1.0.0",
+        "timestamp": datetime.datetime.now().isoformat()
+    })
+
 @app.route('/api/health')
 def health_check():
     """Health check endpoint"""
