@@ -44,7 +44,6 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
-          cache-dependency-path: 'requirements.txt'
 
       - name: 📦 Install Python Dependencies
         run: |
@@ -59,7 +58,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
 
       - name: 📦 Install Node Dependencies
         run: |
@@ -74,17 +72,22 @@ jobs:
       # Security Scans with proper error handling
       - name: 🛡️ Trivy Vulnerability Scanner
         run: |
+          # Ensure reports directory exists
+          mkdir -p reports
+          
+          # Run Trivy scan
           docker run --rm -v "${{ github.workspace }}:/workspace" \
             aquasec/trivy:latest fs /workspace \
             --format sarif --output /workspace/trivy-results.sarif || true
           
-          # Verify file was created
-          if [ -f "trivy-results.sarif" ]; then
-            echo "✅ Trivy scan completed"
-          else
+          # Verify file was created, create empty one if not
+          if [ ! -f "trivy-results.sarif" ]; then
             echo "⚠️ Trivy scan failed, creating empty SARIF"
             echo '{"version":"2.1.0","runs":[]}' > trivy-results.sarif
           fi
+          
+          # Move to reports directory
+          cp trivy-results.sarif reports/ || true
         continue-on-error: true
 
       - name: 📊 Upload Trivy Results
@@ -96,23 +99,27 @@ jobs:
 
       - name: 🐍 Python Security Check (Bandit)
         run: |
+          mkdir -p reports
           bandit -r . -f json -o reports/bandit-report.json || true
           bandit -r . || echo "Bandit found security issues"
         continue-on-error: true
 
       - name: 🔐 Python Dependency Check (Safety)
         run: |
+          mkdir -p reports
           safety check --json --output reports/safety-report.json || true
           safety check || echo "Safety found vulnerabilities"
         continue-on-error: true
 
       - name: 🟨 JavaScript Security Linting
         run: |
+          mkdir -p reports
           if [ -f "package.json" ] && [ -d "node_modules" ]; then
             npx eslint *.js --format json --output-file reports/eslint-report.json || true
             npx eslint *.js || echo "ESLint found security issues"
           else
             echo "No JavaScript files or dependencies to lint"
+            echo '[]' > reports/eslint-report.json
           fi
         continue-on-error: true
 
@@ -130,14 +137,18 @@ jobs:
         uses: github/codeql-action/analyze@v3
         continue-on-error: true
 
+      - name: 📋 Create Security Summary
+        run: |
+          echo "📊 Security Analysis Complete"
+          ls -la reports/ || echo "No reports directory"
+          ls -la trivy-results.sarif || echo "No trivy results"
+
       - name: 📋 Upload Security Reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-reports
-          path: |
-            reports/
-            trivy-results.sarif
+          path: reports/
         continue-on-error: true
 
   # 🧪 STAGE 2: Test Suite (3-5 min)
@@ -162,7 +173,6 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
-          cache-dependency-path: 'requirements.txt'
 
       - name: 📦 Install Dependencies
         run: |
@@ -178,6 +188,7 @@ jobs:
 
       - name: 🧪 Run All Tests with Coverage
         run: |
+          mkdir -p test-results
           python -m pytest test_game_server.py -v \
             --cov=game_server \
             --cov-report=html:test-results/coverage_html \
