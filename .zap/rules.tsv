@@ -1,0 +1,39 @@
+# 🛡️ OWASP ZAP Security Scanning Rules for Cyber Ninja Academy
+# Rule format: ID	RISK	NAME	DESCRIPTION
+
+# Information Disclosure
+10095	IGNORE	Backup File Disclosure	Static site may have backup files
+10096	IGNORE	Hash Disclosure	Educational platform may show hashes
+
+# Content Security Policy
+10038	HIGH	Content Security Policy (CSP) Header Not Set	Must have CSP
+10063	MEDIUM	Feature Policy Header Not Set	Should have Feature Policy
+
+# Security Headers
+10020	HIGH	X-Frame-Options Header Not Set	Must prevent clickjacking
+10021	HIGH	X-Content-Type-Options Header Not Set	Must prevent MIME sniffing
+10023	HIGH	Information Disclosure - Debug Error Messages	No debug info in production
+10024	HIGH	Information Disclosure - Sensitive Information in URL	No sensitive data in URLs
+10025	HIGH	Information Disclosure - Sensitive Information in HTTP Referrer Header	Control referrer policy
+
+# Authentication and Session Management
+10040	HIGH	Secure Flag Not Set on Cookie	All cookies must be secure
+10054	HIGH	Cookie Without SameSite Attribute	Must have SameSite
+
+# Input Validation
+40012	HIGH	Cross Site Scripting (Reflected)	No XSS vulnerabilities
+40014	HIGH	Cross Site Scripting (Persistent)	No stored XSS
+40016	HIGH	Cross Site Scripting (Persistent) - Prime	No XSS in prime locations
+40017	HIGH	Cross Site Scripting (Persistent) - Spider	No XSS via spider
+40018	HIGH	SQL Injection	No SQL injection (even if no DB)
+
+# HTTPS and Transport Security
+10015	HIGH	HTTP Parameter Override	Must use HTTPS
+10016	HIGH	Web Browser XSS Protection Not Enabled	XSS protection required
+10017	HIGH	Cross-Domain JavaScript Source File Inclusion	Control external scripts
+10019	HIGH	Content-Type Header Missing	Proper content types
+
+# Modern Security
+90001	HIGH	Insecure JSNativeInterface	No insecure interfaces
+90011	HIGH	Charset Mismatch	Consistent charset
+90020	HIGH	Missing Anti-clickjacking Header	Anti-clickjacking required 

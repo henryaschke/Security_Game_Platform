@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥷 Cyber Ninja Academy - Secret Agent Training</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="matrix-bg">
+        <div class="matrix-code"></div>
+        <div class="floating-icons">
+            <i class="fas fa-user-secret"></i>
+            <i class="fas fa-skull"></i>
+            <i class="fas fa-code"></i>
+            <i class="fas fa-bug"></i>
+            <i class="fas fa-shield-virus"></i>
+            <i class="fas fa-mask"></i>
+        </div>
+    </div>
+
+    <header class="ninja-header">
+        <div class="container">
+            <div class="nav-brand">
+                <div class="ninja-logo">
+                    <i class="fas fa-user-ninja"></i>
+                    <div class="logo-text">
+                        <h1>CyberGuard</h1>
+                        <span class="subtitle">NINJA ACADEMY</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-link active">🏠 Hideout</a>
+                <a href="#games" class="nav-link">🎮 Training Dojo</a>
+                <a href="#assessments" class="nav-link">📋 Skill Tests</a>
+                <a href="#phishing" class="nav-link">🎣 Trap Detection</a>
+                <a href="#reports" class="nav-link">📊 Mission Reports</a>
+                <a href="#help" class="nav-link">❓ Sensei Help</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <div class="ninja-avatar">
+                        <i class="fas fa-user-ninja"></i>
+                        <div class="avatar-glow"></div>
+                    </div>
+                    <h2 class="hero-title">
+                        <span class="glitch" data-text="WELCOME, CYBER NINJA!">WELCOME, CYBER NINJA!</span>
+                    </h2>
+                    <p class="hero-subtitle">
+                        🥷 Master the ancient art of cybersecurity through stealth training missions! 
+                        <br>Your digital dojo awaits, young grasshopper...
+                    </p>
+                    <div class="danger-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>CLASSIFIED TRAINING - AUTHORIZED PERSONNEL ONLY</span>
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Training Modules Grid -->
+            <section class="training-dojo">
+                <h3 class="section-title">
+                    <i class="fas fa-fist-raised"></i> Choose Your Training Mission
+                    <span class="subtitle">Select a module to begin your ninja training</span>
+                </h3>
+                
+                <div class="ninja-cards-grid">
+                    <!-- Password Security Dojo -->
+                    <div class="ninja-card games-mission" data-mission="password">
+                        <div class="card-danger-border"></div>
+                        <div class="ninja-card-header">
+                            <div class="mission-icon">
+                                <i class="fas fa-user-ninja"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3>🍳 Password Chef Dojo</h3>
+                            <span class="mission-difficulty">EASY</span>
+                        </div>
+                        <div class="ninja-card-content">
+                            <p>🥷 Master the ancient art of password creation through hilarious cooking challenges!</p>
+                            <div class="mission-stats">
+                                <div class="stat">
+                                    <i class="fas fa-fire"></i>
+                                    <span class="stat-number">0</span>
+                                    <span class="stat-label">Recipes Cooked</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-medal"></i>
+                                    <span class="stat-number">0</span>
+                                    <span class="stat-label">Chef Badges</span>
+                                </div>
+                            </div>
+                            <div class="mission-warning">
+                                <i class="fas fa-skull"></i>
+                                <span>WARNING: Kitchen disasters may occur!</span>
+                            </div>
+                            <button class="ninja-btn primary" onclick="openModule('games')">
+                                <i class="fas fa-play"></i> BEGIN MISSION
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Phishing Detection Lab -->
+                    <div class="ninja-card phishing-mission" data-mission="phishing">
+                        <div class="card-danger-border"></div>
+                        <div class="ninja-card-header">
+                            <div class="mission-icon">
+                                <i class="fas fa-search"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3>🕵️ Email Detective Lab</h3>
+                            <span class="mission-difficulty">MEDIUM</span>
+                        </div>
+                        <div class="ninja-card-content">
+                            <p>🔍 Expose evil phishing schemes and become a master email detective!</p>
+                            <div class="mission-stats">
+                                <div class="stat">
+                                    <i class="fas fa-eye"></i>
+                                    <span class="stat-number">0</span>
+                                    <span class="stat-label">Threats Detected</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span class="stat-number">0</span>
+                                    <span class="stat-label">People Saved</span>
+                                </div>
+                            </div>
+                            <div class="mission-warning">
+                                <i class="fas fa-skull"></i>
+                                <span>WARNING: Dangerous emails lurk ahead!</span>
+                            </div>
+                            <button class="ninja-btn primary" onclick="openModule('phishing')">
+                                <i class="fas fa-play"></i> BEGIN MISSION
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Skill Assessment Arena -->
+                    <div class="ninja-card assessment-mission" data-mission="assessment">
+                        <div class="card-danger-border"></div>
+                        <div class="ninja-card-header">
+                            <div class="mission-icon">
+                                <i class="fas fa-scroll"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3>📜 Ninja Skill Trials</h3>
+                            <span class="mission-difficulty">HARD</span>
+                        </div>
+                        <div class="ninja-card-content">
+                            <p>⚔️ Prove your cybersecurity mastery in challenging skill trials!</p>
+                            <div class="mission-stats">
+                                <div class="stat">
+                                    <i class="fas fa-brain"></i>
+                                    <span class="stat-number">0</span>
+                                    <span class="stat-label">Trials Passed</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-percentage"></i>
+                                    <span class="stat-number">0%</span>
+                                    <span class="stat-label">Success Rate</span>
+                                </div>
+                            </div>
+                            <div class="mission-warning">
+                                <i class="fas fa-skull"></i>
+                                <span>WARNING: Only true ninjas survive!</span>
+                            </div>
+                            <button class="ninja-btn primary" onclick="openModule('assessments')">
+                                <i class="fas fa-play"></i> BEGIN TRIAL
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mission Reports -->
+                    <div class="ninja-card reports-mission" data-mission="reports">
+                        <div class="card-danger-border"></div>
+                        <div class="ninja-card-header">
+                            <div class="mission-icon">
+                                <i class="fas fa-chart-area"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3>📊 Ninja Intelligence</h3>
+                            <span class="mission-difficulty">INFO</span>
+                        </div>
+                        <div class="ninja-card-content">
+                            <p>📈 Monitor your training progress and unlock secret achievements!</p>
+                            <div class="mission-stats">
+                                <div class="stat">
+                                    <i class="fas fa-level-up-alt"></i>
+                                    <span class="stat-number">1</span>
+                                    <span class="stat-label">Ninja Rank</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-star"></i>
+                                    <span class="stat-number">0</span>
+                                    <span class="stat-label">XP Points</span>
+                                </div>
+                            </div>
+                            <div class="mission-warning">
+                                <i class="fas fa-eye"></i>
+                                <span>CLASSIFIED: Top secret intel inside!</span>
+                            </div>
+                            <button class="ninja-btn secondary" onclick="openModule('reports')">
+                                <i class="fas fa-file-alt"></i> VIEW INTEL
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sensei Help Center -->
+                    <div class="ninja-card help-mission" data-mission="help">
+                        <div class="card-danger-border"></div>
+                        <div class="ninja-card-header">
+                            <div class="mission-icon">
+                                <i class="fas fa-user-graduate"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3>🧙 Sensei Wisdom</h3>
+                            <span class="mission-difficulty">GUIDE</span>
+                        </div>
+                        <div class="ninja-card-content">
+                            <p>🧠 Seek ancient wisdom and guidance from the cybersecurity masters!</p>
+                            <div class="help-ninja-links">
+                                <a href="#" class="ninja-help-link" onclick="showHelp('faq')">
+                                    <i class="fas fa-book-open"></i> Ancient Scrolls (FAQ)
+                                </a>
+                                <a href="#" class="ninja-help-link" onclick="showHelp('tutorials')">
+                                    <i class="fas fa-video"></i> Training Videos
+                                </a>
+                                <a href="#" class="ninja-help-link" onclick="showHelp('contact')">
+                                    <i class="fas fa-phone"></i> Emergency Sensei
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Elite Leaderboard -->
+                    <div class="ninja-card leaderboard-mission" data-mission="leaderboard">
+                        <div class="card-danger-border"></div>
+                        <div class="ninja-card-header">
+                            <div class="mission-icon">
+                                <i class="fas fa-crown"></i>
+                                <div class="icon-glow"></div>
+                            </div>
+                            <h3>👑 Elite Rankings</h3>
+                            <span class="mission-difficulty">ELITE</span>
+                        </div>
+                        <div class="ninja-card-content">
+                            <p>🏆 Challenge the greatest cyber ninjas and claim your throne!</p>
+                            <div class="elite-preview">
+                                <div class="elite-rank">
+                                    <span class="rank">🥇</span>
+                                    <span class="name">Shadow Master</span>
+                                    <span class="score">1,250</span>
+                                </div>
+                                <div class="elite-rank">
+                                    <span class="rank">🥈</span>
+                                    <span class="name">Code Phantom</span>
+                                    <span class="score">1,180</span>
+                                </div>
+                                <div class="elite-rank">
+                                    <span class="rank">🥉</span>
+                                    <span class="name">Byte Assassin</span>
+                                    <span class="score">1,120</span>
+                                </div>
+                            </div>
+                            <button class="ninja-btn elite" onclick="openModule('leaderboard')">
+                                <i class="fas fa-trophy"></i> ENTER ARENA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Emergency Actions -->
+            <section class="emergency-panel">
+                <h3 class="section-title">
+                    <i class="fas fa-exclamation-triangle"></i> Emergency Ninja Actions
+                    <span class="subtitle">Quick access to critical security tools</span>
+                </h3>
+                <div class="emergency-buttons">
+                    <button class="emergency-btn red" onclick="quickAction('reportThreat')">
+                        <div class="btn-icon">
+                            <i class="fas fa-skull-crossbones"></i>
+                        </div>
+                        <div class="btn-text">
+                            <span class="btn-title">REPORT THREAT</span>
+                            <span class="btn-subtitle">Alert the cyber sensei!</span>
+                        </div>
+                        <div class="btn-danger-line"></div>
+                    </button>
+                    <button class="emergency-btn orange" onclick="quickAction('takeQuiz')">
+                        <div class="btn-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="btn-text">
+                            <span class="btn-title">QUICK MISSION</span>
+                            <span class="btn-subtitle">Test your ninja skills!</span>
+                        </div>
+                        <div class="btn-danger-line"></div>
+                    </button>
+                    <button class="emergency-btn blue" onclick="quickAction('viewTips')">
+                        <div class="btn-icon">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <div class="btn-text">
+                            <span class="btn-title">NINJA WISDOM</span>
+                            <span class="btn-subtitle">Ancient security secrets</span>
+                        </div>
+                        <div class="btn-danger-line"></div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Footer Message -->
+            <section class="ninja-footer">
+                <div class="footer-content">
+                    <p>
+                        <i class="fas fa-user-secret"></i>
+                        <strong>Remember, young ninja:</strong> 
+                        With great cyber power comes great responsibility. 
+                        Use your skills to protect, not to harm. 🥷
+                    </p>
+                    <div class="classified-stamp">
+                        <span>CLASSIFIED</span>
+                        <div class="stamp-border"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal for module details -->
+    <div id="moduleModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Module</h2>
+            <div id="modalBody">
+                <p>This module is under development. Coming soon!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

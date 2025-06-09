@@ -1,0 +1,137 @@
+"Key","Issue Type","Parent","Summary","Status","Assignee","Sprint","Start date","Inferred start date","Due date","Inferred due date","Issue color"
+"AGILE-3","Epic","","Epic 3 - Interactive Security Awareness Game Platform","To Do","","","","","","","purple"
+"AGILE-6","Story","AGILE-3","As a user, I want to log in securely using SAML
+
+","Done","","","","","","","purple"
+"AGILE-7","Story","AGILE-3","As a user, I want to play security-themed quiz games at different difficulty levels so that learning remains engaging and adaptive.
+
+","To Do","","","","","","","purple"
+"AGILE-28","Story","AGILE-3","As a user, I want to view my score and progress after each game so that I understand my learning performance.
+
+","To Do","","","","","","","purple"
+"AGILE-9","Story","AGILE-3","As a user, I want to earn badges and rewards for completing challenges so that I stay motivated.
+
+","To Do","","","","","","","purple"
+"AGILE-10","Story","AGILE-3","As a user, I want to view a leaderboard so that I can compare my performance with peers.
+
+","To Do","","","","","","","purple"
+"AGILE-29","Story","AGILE-3","As an admin, I want to create, categorize, and manage quiz content so that the game content stays updated and relevant.
+
+","To Do","","","","","","","purple"
+"AGILE-12","Story","AGILE-3","As an admin, I want to configure and publish weekly challenges with custom rules so that user engagement remains high.
+
+","To Do","","","","","","","purple"
+"AGILE-16","Story","AGILE-3","As a manager, I want to access analytics on employee game participation so that I can evaluate team involvement.
+
+","To Do","","","","","","","purple"
+"AGILE-15","Story","AGILE-3","As a user, I want to replay previously completed game levels so that I can reinforce knowledge.
+
+","To Do","","","","","","","purple"
+"AGILE-8","Story","AGILE-3","As an admin, I want to export game performance data at user and department levels so that I can report on training impact.
+
+","To Do","","","","","","","purple"
+"AGILE-64","Story","AGILE-3","As an admin, I want to view a dashboard showing completion rates for each department so that I can follow up with teams that haven't finished the test.","To Do","","","","","","","purple"
+"AGILE-4","Epic","","Epic 4 - Phishing Simulation and Threat Reporting","To Do","","","","","","","purple"
+"AGILE-18","Story","AGILE-4","As an admin, I want to design and schedule simulated phishing emails so that I can test employee awareness.
+
+","To Do","","","","","","","purple"
+"AGILE-17","Story","AGILE-4","As a system, I want to track which users open or click phishing links so that risk behavior is logged.
+
+","To Do","","","","","","","purple"
+"AGILE-19","Story","AGILE-4","As a manager, I want to view heatmaps of phishing test results by department so that I can identify high-risk areas.
+
+","To Do","","","","","","","purple"
+"AGILE-20","Story","AGILE-4","As a user, I want to report suspicious emails with a single click so that the security team can act quickly.
+
+","To Do","","","","","","","purple"
+"AGILE-22","Story","AGILE-4","As an admin, I want to run phishing simulations targeted by department so that scenarios match relevant threats.
+
+","To Do","","","","","","","purple"
+"AGILE-23","Story","AGILE-4","As a user, I want to receive immediate feedback if I fall for a phishing simulation so that I can learn from the mistake.
+
+","To Do","","","","","","","purple"
+"AGILE-24","Story","AGILE-4","As a system, I want to send personalized awareness tips based on phishing test performance so that users can improve.
+
+","To Do","","","","","","","purple"
+"AGILE-25","Story","AGILE-4","As a user, I want to access a report summarizing my phishing test performance so that I can track my own improvement.
+
+
+","To Do","","","","","","","purple"
+"AGILE-26","Story","AGILE-4","As a user, I want to access a report summarizing my phishing test performance so that I can track my own improvement.
+
+","To Do","","","","","","","purple"
+"AGILE-27","Story","AGILE-4","As a system, I want to automatically generate user risk scores based on phishing behavior (e.g., clicks, reports, misses) so that high-risk users can be flagged for follow-up.
+
+","To Do","","","","","","","purple"
+"AGILE-5","Epic","","Epic 5 - DevSecOps & Secure Deployment on GCP","To Do","","","","2025/05/18","","2025/05/24","purple"
+"AGILE-30","Story","AGILE-5","As a developer, I want to use GitHub for version control so that code changes are tracked collaboratively.
+
+","Done","AKASH LOHCHAB","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-31","Story","AGILE-5","As a team, we want to track sprint tasks and development status using Jira so that work progress is transparent.
+
+
+","Done","","AGILE Sprint 1","","2025/05/18","2025/05/20","2025/05/24","purple"
+"AGILE-32","Story","AGILE-5","As a DevOps engineer, I want to set up GitHub Actions for CI/CD so that builds, tests, and deployments are automated.
+
+","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-33","Story","AGILE-5","As a DevOps engineer, I want to enable automated rollback on deployment failure so that the system can revert to the last stable version without manual intervention.","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-34","Story","AGILE-5","As a DevOps engineer, I want to deploy the platform on GCP App Engine so that it scales reliably.
+
+","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-35","Story","AGILE-5","As a DevOps engineer, I want to store data securely in GCP Firestore so that structured data is handled appropriately.
+
+","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-36","Story","AGILE-5","As a security engineer, I want to run Trivy container scans during CI so that vulnerabilities are caught early.
+
+","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-37","Story","AGILE-5","As a DevOps engineer, I want to set up monitoring and alerts using GCP Stackdriver so that issues are detected in real time.
+
+","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-38","Story","AGILE-5","As a team, we want to configure GCP IAM policies with least privilege so that access control is tight and secure.
+
+","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-39","Story","AGILE-5","As a security engineer, I want to enforce HTTPS on all endpoints so that user data is transmitted securely.
+
+","Done","","AGILE Sprint 1","","2025/05/18","","2025/05/24","purple"
+"AGILE-40","Epic","","Epic 6 - In-App Guidance & Support System","To Do","","","","","","","purple"
+"AGILE-41","Story","AGILE-40","As a user, I want to access a help button on every screen so that I can get assistance without leaving the app.
+
+","To Do","","","","","","","purple"
+"AGILE-42","Story","AGILE-40","As a user, I want to see tooltips or short definitions when hovering over technical terms so that I understand cybersecurity concepts better.
+
+","To Do","","","","","","","purple"
+"AGILE-43","Story","AGILE-40","As an employee, I want a searchable FAQ section so that I can resolve common issues quickly.
+
+","To Do","","","","","","","purple"
+"AGILE-44","Story","AGILE-40","As a user, I want to access short tutorials or walkthroughs for new features so that I can use the platform effectively","To Do","","","","","","","purple"
+"AGILE-45","Story","AGILE-40","As an admin, I want to see which help articles are most frequently accessed so that I can improve the content based on demand.
+
+","To Do","","","","","","","purple"
+"AGILE-46","Story","AGILE-40","As a system, I want to recommend help articles based on where the user is in the training so that support is context-aware","To Do","","","","","","","purple"
+"AGILE-47","Story","AGILE-40","As a user, I want to submit feedback on help articles so that unclear content can be improved.
+
+","To Do","","","","","","","purple"
+"AGILE-48","Story","AGILE-40","As a training manager, I want to monitor help requests to identify recurring problems and adjust training content","To Do","","","","","","","purple"
+"AGILE-49","Story","AGILE-40","As a user, I want to contact support if my issue isn’t resolved through help content so that I can get personal assistance","To Do","","","","","","","purple"
+"AGILE-50","Story","AGILE-40","As an admin, I want to manage help content in a CMS-style interface so that I can update support material easily","To Do","","","","","","","purple"
+"AGILE-51","Epic","","Epic 1 - Develop and Deliver Cybersecurity Assessment Tests","To Do","","","","","","","purple"
+"AGILE-52","Story","AGILE-51","As an admin, I want to create cybersecurity assessment templates so that I can reuse standard tests across departments.","To Do","","","","","","","purple"
+"AGILE-53","Story","AGILE-51","As an admin, I want to customize questions based on departments (e.g., finance, IT, HR) so that the test content is relevant to each employee's role.","To Do","","","","","","","purple"
+"AGILE-54","Story","AGILE-51","As a security officer, I want to define difficulty levels (e.g., basic, intermediate, advanced) for each test so that assessments can be aligned with user experience levels.","To Do","","","","","","","purple"
+"AGILE-55","Story","AGILE-51","As an admin, I want to schedule assessments to be delivered automatically at regular intervals so that employees are tested periodically without manual effort.","To Do","","","","","","","purple"
+"AGILE-56","Story","AGILE-51","As an employee, I want to be notified via email when a new cybersecurity test is available so that I can complete it on time.","To Do","","","","","","","purple"
+"AGILE-57","Story","AGILE-51","As an employee, I want to access the test securely from my company dashboard so that I can take the assessment without logging in separately.","To Do","","","","","","","purple"
+"AGILE-58","Story","AGILE-51","As an employee, I want to receive immediate feedback on which questions I answered correctly or incorrectly so that I can learn from my mistakes.","To Do","","","","","","","purple"
+"AGILE-59","Story","AGILE-51","As an admin, I want to randomize the question order for each test so that employees receive unique test versions and reduce cheating.","To Do","","","","","","","purple"
+"AGILE-60","Story","AGILE-51","As a security officer, I want to include multimedia questions (e.g., phishing email examples, suspicious links) so that assessments simulate real-world scenarios.","To Do","","","","","","","purple"
+"AGILE-63","Story","AGILE-51","As a security officer, I want to track and analyze assessment results across departments so that I can identify knowledge gaps and improve future training.","To Do","","","","","","","purple"
+"AGILE-61","Epic","","Epic 2 - Monitor, Report, and Improve Employee Cybersecurity Awareness","To Do","","","","","","","purple"
+"AGILE-65","Story","AGILE-61","As a security officer, I want to generate reports on common knowledge gaps so that training materials can be adjusted accordingly.","To Do","","","","","","","purple"
+"AGILE-66","Story","AGILE-61","As a manager, I want to see individual and team performance trends over time so that I can assess cybersecurity awareness progress.","To Do","","","","","","","purple"
+"AGILE-67","Story","AGILE-61","As an admin, I want to set performance benchmarks (e.g., 80% passing score) so that I can flag employees who need additional training.","To Do","","","","","","","purple"
+"AGILE-68","Task","AGILE-61","As a compliance officer, I want to export assessment results for audits so that I can prove employee participation in mandatory security training.","To Do","","","","","","","purple"
+"AGILE-69","Task","AGILE-61","As an admin, I want to send reminders to employees who haven’t completed the test so that overall compliance rates improve.","To Do","","","","","","","purple"
+"AGILE-70","Task","AGILE-61","As a security officer, I want to compare assessment scores before and after awareness campaigns so that I can measure campaign effectiveness.","To Do","","","","","","","purple"
+"AGILE-71","Task","AGILE-61","As an employee, I want to access my past test scores and feedback so that I can track my own improvement.","To Do","","","","","","","purple"
+"AGILE-72","Story","AGILE-61","As a training manager, I want to assign follow-up modules to employees who fail certain topics so that I can address knowledge gaps efficiently.","To Do","","","","","","","purple"
+"AGILE-73","Story","AGILE-61","As a compliance officer, I want to schedule recurring awareness evaluations so that continuous monitoring aligns with regulatory requirements.","To Do","","","","","","","purple"

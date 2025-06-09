@@ -1,0 +1,85 @@
+runtime: python311
+
+# 🧪 Staging Configuration for Cyber Ninja Academy
+service: cyber-ninja-academy-staging
+
+# ⚡ Instance Configuration (smaller for staging)
+instance_class: F1
+automatic_scaling:
+  min_instances: 0
+  max_instances: 3
+  target_cpu_utilization: 0.8
+
+# 🛡️ Security Headers (same as production)
+handlers:
+  # Static assets with security headers
+  - url: /(.*\.(css|js|png|jpg|jpeg|gif|ico|svg))$
+    static_files: \1
+    upload: (.*\.(css|js|png|jpg|jpeg|gif|ico|svg))$
+    secure: always
+    redirect_http_response_code: 301
+    http_headers:
+      Strict-Transport-Security: "max-age=31536000; includeSubDomains"
+      X-Content-Type-Options: "nosniff"
+      X-Frame-Options: "DENY"
+      X-XSS-Protection: "1; mode=block"
+      Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'"
+      Referrer-Policy: "strict-origin-when-cross-origin"
+      Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+
+  # HTML files with security headers
+  - url: /(.*\.html)$
+    static_files: \1
+    upload: (.*\.html)$
+    secure: always
+    redirect_http_response_code: 301
+    http_headers:
+      Strict-Transport-Security: "max-age=31536000; includeSubDomains"
+      X-Content-Type-Options: "nosniff"
+      X-Frame-Options: "DENY"
+      X-XSS-Protection: "1; mode=block"
+      Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'"
+      Referrer-Policy: "strict-origin-when-cross-origin"
+      Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+
+  # API endpoints
+  - url: /api/.*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301
+
+  # Root and fallback
+  - url: /.*
+    static_files: index.html
+    upload: index.html
+    secure: always
+    redirect_http_response_code: 301
+    http_headers:
+      Strict-Transport-Security: "max-age=31536000; includeSubDomains"
+      X-Content-Type-Options: "nosniff"
+      X-Frame-Options: "DENY"
+      X-XSS-Protection: "1; mode=block"
+      Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'"
+      Referrer-Policy: "strict-origin-when-cross-origin"
+      Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+
+# 🌍 Environment Variables
+env_variables:
+  ENVIRONMENT: "staging"
+  FLASK_ENV: "development"
+  PYTHONPATH: "/srv"
+
+# 📊 Health Checks
+readiness_check:
+  path: "/health"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+liveness_check:
+  path: "/health"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 4
+  success_threshold: 2 

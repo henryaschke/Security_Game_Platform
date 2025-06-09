@@ -1,0 +1,89 @@
+# 🛡️ Security - Never commit these files
+*.key
+*.json
+cyber-ninja-key.json
+service-account-*.json
+
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 🌐 Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 🔧 IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 📊 Testing and Coverage
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# 📝 Logs
+*.log
+logs/
+
+# 🚀 Deployment
+.gcloudignore
+.deploy/
+
+# 💾 Database
+*.db
+*.sqlite3
+
+# 🔐 Environment Variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 🌍 OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 📦 Dependencies
+node_modules/
+package-lock.json
+
+# 🛠️ Build artifacts
+*.tar.gz
+*.zip 
