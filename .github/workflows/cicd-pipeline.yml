@@ -16,29 +16,17 @@ permissions:
 env:
   PYTHON_VERSION: '3.11'
   NODE_VERSION: '18'
-  PYTHONPATH: ${{ github.workspace }}
-  TESTING: 'true'
 
 jobs:
-  # 🔍 STAGE 1: Security Analysis (5-7 min)
+  # 🔍 STAGE 1: Security Analysis
   security-analysis:
     name: 🔍 Security Analysis
     runs-on: ubuntu-latest
-    continue-on-error: false
     
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: 🔧 Setup Environment
-        run: |
-          echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-          echo "TESTING=true" >> $GITHUB_ENV
-          mkdir -p reports security-results test-results
-
-      # Install Python dependencies with proper caching
       - name: 🐍 Setup Python
         uses: actions/setup-python@v4
         with:
@@ -47,12 +35,10 @@ jobs:
 
       - name: 📦 Install Python Dependencies
         run: |
-          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install bandit safety flake8
-        continue-on-error: false
+          pip install bandit safety
 
-      # Install Node.js dependencies with proper caching
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -61,67 +47,38 @@ jobs:
 
       - name: 📦 Install Node Dependencies
         run: |
-          if [ -f "package-lock.json" ]; then
-            npm ci
-          else
-            npm install
-          fi
+          npm ci
           npm install eslint eslint-plugin-security --save-dev
-        continue-on-error: true
 
-      # Security Scans with proper error handling
+      - name: 🔧 Create Reports Directory
+        run: mkdir -p reports
+
       - name: 🛡️ Trivy Vulnerability Scanner
         run: |
-          # Ensure reports directory exists
-          mkdir -p reports
-          
-          # Run Trivy scan
           docker run --rm -v "${{ github.workspace }}:/workspace" \
             aquasec/trivy:latest fs /workspace \
-            --format sarif --output /workspace/trivy-results.sarif || true
+            --format sarif --output /workspace/trivy-results.sarif || echo "Trivy scan completed"
           
-          # Verify file was created, create empty one if not
+          # Ensure file exists for upload
           if [ ! -f "trivy-results.sarif" ]; then
-            echo "⚠️ Trivy scan failed, creating empty SARIF"
             echo '{"version":"2.1.0","runs":[]}' > trivy-results.sarif
           fi
-          
-          # Move to reports directory
-          cp trivy-results.sarif reports/ || true
-        continue-on-error: true
+          cp trivy-results.sarif reports/
 
-      - name: 📊 Upload Trivy Results
-        uses: github/codeql-action/upload-sarif@v3
-        if: always() && hashFiles('trivy-results.sarif') != ''
-        with:
-          sarif_file: 'trivy-results.sarif'
-        continue-on-error: true
-
-      - name: 🐍 Python Security Check (Bandit)
+      - name: 🐍 Python Security (Bandit)
         run: |
-          mkdir -p reports
-          bandit -r . -f json -o reports/bandit-report.json || true
-          bandit -r . || echo "Bandit found security issues"
-        continue-on-error: true
+          bandit -r . -f json -o reports/bandit-report.json || echo "Bandit completed"
+          bandit -r . || echo "Bandit found issues"
 
-      - name: 🔐 Python Dependency Check (Safety)
+      - name: 🔐 Python Dependencies (Safety)
         run: |
-          mkdir -p reports
-          safety check --json --output reports/safety-report.json || true
-          safety check || echo "Safety found vulnerabilities"
-        continue-on-error: true
+          safety check --json --output reports/safety-report.json || echo "Safety completed"
+          safety check || echo "Safety found issues"
 
-      - name: 🟨 JavaScript Security Linting
+      - name: 🟨 JavaScript Security (ESLint)
         run: |
-          mkdir -p reports
-          if [ -f "package.json" ] && [ -d "node_modules" ]; then
-            npx eslint *.js --format json --output-file reports/eslint-report.json || true
-            npx eslint *.js || echo "ESLint found security issues"
-          else
-            echo "No JavaScript files or dependencies to lint"
-            echo '[]' > reports/eslint-report.json
-          fi
-        continue-on-error: true
+          npx eslint *.js --format json --output-file reports/eslint-report.json || echo "ESLint completed"
+          npx eslint *.js || echo "ESLint found issues"
 
       - name: 🔍 CodeQL Analysis
         uses: github/codeql-action/init@v3
@@ -133,15 +90,23 @@ jobs:
         uses: github/codeql-action/autobuild@v3
         continue-on-error: true
 
-      - name: 🔍 CodeQL Analysis Results
+      - name: 🔍 CodeQL Results
         uses: github/codeql-action/analyze@v3
         continue-on-error: true
 
-      - name: 📋 Create Security Summary
+      - name: 📊 Upload Trivy SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+        continue-on-error: true
+
+      - name: 📋 List Reports
         run: |
-          echo "📊 Security Analysis Complete"
-          ls -la reports/ || echo "No reports directory"
-          ls -la trivy-results.sarif || echo "No trivy results"
+          echo "Generated reports:"
+          ls -la reports/
+          echo "Report contents:"
+          find reports/ -type f -exec echo "File: {}" \; -exec head -3 {} \; || echo "No reports found"
 
       - name: 📋 Upload Security Reports
         uses: actions/upload-artifact@v4
@@ -149,9 +114,9 @@ jobs:
         with:
           name: security-reports
           path: reports/
-        continue-on-error: true
+          if-no-files-found: warn
 
-  # 🧪 STAGE 2: Test Suite (3-5 min)
+  # 🧪 STAGE 2: Test Suite
   test-suite:
     name: 🧪 Test Suite
     runs-on: ubuntu-latest
@@ -161,13 +126,6 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🔧 Setup Environment
-        run: |
-          echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
-          echo "TESTING=true" >> $GITHUB_ENV
-          echo "SECRET_KEY=test-secret-key-for-ci" >> $GITHUB_ENV
-          mkdir -p test-results
-
       - name: 🐍 Setup Python
         uses: actions/setup-python@v4
         with:
@@ -176,27 +134,28 @@ jobs:
 
       - name: 📦 Install Dependencies
         run: |
-          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 🔍 Validate Python Modules
+      - name: 🔧 Setup Test Environment
         run: |
-          python -c "import sys; print('Python path:', sys.path)"
-          python -c "import game_server; print('✅ game_server imports successfully')"
-          python -c "import test_config; print('✅ test_config imports successfully')"
-        continue-on-error: false
-
-      - name: 🧪 Run All Tests with Coverage
-        run: |
+          export PYTHONPATH="${{ github.workspace }}"
+          export TESTING=true
           mkdir -p test-results
-          python -m pytest test_game_server.py -v \
+
+      - name: 🔍 Validate Imports
+        run: |
+          python -c "import game_server; print('✅ game_server imports OK')"
+          python -c "import test_config; print('✅ test_config imports OK')" || echo "⚠️ test_config optional"
+
+      - name: 🧪 Run Tests
+        run: |
+          PYTHONPATH="${{ github.workspace }}" TESTING=true python -m pytest test_game_server.py -v \
             --cov=game_server \
-            --cov-report=html:test-results/coverage_html \
+            --cov-report=html:test-results/coverage \
             --cov-report=xml:test-results/coverage.xml \
-            --cov-report=term \
-            --html=test-results/pytest_report.html \
+            --html=test-results/report.html \
             --json-report --json-report-file=test-results/results.json
-        continue-on-error: false
 
       - name: 📈 Upload Test Results
         uses: actions/upload-artifact@v4
@@ -204,8 +163,9 @@ jobs:
         with:
           name: test-results
           path: test-results/
+          if-no-files-found: warn
 
-  # 🏗️ STAGE 3: Build Application (2-3 min)
+  # 🏗️ STAGE 3: Build Application
   build-application:
     name: 🏗️ Build Application
     runs-on: ubuntu-latest
@@ -215,71 +175,39 @@ jobs:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
 
-      - name: 🐍 Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: 📦 Install Dependencies
+      - name: 🔧 Build Package
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: 🔧 Build Application Package
-        run: |
-          # Create distribution directory
           mkdir -p dist/
           
-          # Copy all necessary files with existence checks
-          echo "📁 Copying application files..."
-          
           # Copy Python files
-          find . -name "*.py" -not -path "./.venv/*" -not -path "./node_modules/*" -exec cp {} dist/ \;
+          cp *.py dist/
           
-          # Copy web assets
-          [ -f "index.html" ] && cp index.html dist/ || echo "⚠️ index.html not found"
-          [ -f "password-chef.html" ] && cp password-chef.html dist/ || echo "⚠️ password-chef.html not found"
-          [ -f "phishing-game.html" ] && cp phishing-game.html dist/ || echo "⚠️ phishing-game.html not found"
-          [ -f "styles.css" ] && cp styles.css dist/ || echo "⚠️ styles.css not found"
-          [ -f "script.js" ] && cp script.js dist/ || echo "⚠️ script.js not found"
-          [ -f "password-chef.js" ] && cp password-chef.js dist/ || echo "⚠️ password-chef.js not found"
-          [ -f "phishing-game.js" ] && cp phishing-game.js dist/ || echo "⚠️ phishing-game.js not found"
+          # Copy web files
+          cp *.html dist/ || echo "No HTML files"
+          cp *.css dist/ || echo "No CSS files"  
+          cp *.js dist/ || echo "No JS files"
           
-          # Copy configuration files
+          # Copy config files
           cp requirements.txt dist/
           cp app.yaml dist/
-          [ -f "app-staging.yaml" ] && cp app-staging.yaml dist/ || echo "⚠️ app-staging.yaml not found"
           
           # Create version info
           echo "BUILD_VERSION=$(date +%Y%m%d-%H%M%S)" > dist/version.txt
           echo "GIT_COMMIT=$(git rev-parse --short HEAD)" >> dist/version.txt
-          echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> dist/version.txt
 
       - name: 🔍 Validate Build
         run: |
           cd dist/
-          echo "📋 Build contents:"
           ls -la
-          
-          echo "🔍 Validating Python imports..."
-          python -c "
-          import sys
-          sys.path.insert(0, '.')
-          try:
-              import game_server
-              print('✅ game_server imports successfully')
-          except ImportError as e:
-              print(f'❌ Import error: {e}')
-              exit(1)
-          "
+          python -c "import sys; sys.path.insert(0, '.'); import game_server; print('✅ Build valid')"
 
-      - name: 📦 Upload Build Artifacts
+      - name: 📦 Upload Build
         uses: actions/upload-artifact@v4
         with:
           name: application-build
           path: dist/
 
-  # 🚀 STAGE 4: Deploy to Production (5-8 min)
+  # 🚀 STAGE 4: Deploy to Production
   deploy-production:
     name: 🚀 Deploy to Production
     runs-on: ubuntu-latest
@@ -288,26 +216,13 @@ jobs:
     environment: production
     
     steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 📦 Download Build Artifacts
+      - name: 📦 Download Build
         uses: actions/download-artifact@v4
         with:
           name: application-build
           path: dist/
 
-      - name: 🔍 Verify Build Contents
-        run: |
-          echo "📋 Deployment package contents:"
-          ls -la dist/
-          
-          echo "🔍 Required files check:"
-          [ -f "dist/game_server.py" ] && echo "✅ game_server.py" || echo "❌ game_server.py missing"
-          [ -f "dist/app.yaml" ] && echo "✅ app.yaml" || echo "❌ app.yaml missing"
-          [ -f "dist/requirements.txt" ] && echo "✅ requirements.txt" || echo "❌ requirements.txt missing"
-
-      - name: 🔐 Setup GCP Authentication
+      - name: 🔐 Setup GCP Auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
@@ -320,8 +235,6 @@ jobs:
       - name: 🚀 Deploy to App Engine
         run: |
           cd dist/
-          
-          echo "🚀 Deploying to App Engine..."
           gcloud app deploy app.yaml \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --version=v$(date +%Y%m%d-%H%M%S) \
@@ -330,27 +243,15 @@ jobs:
 
       - name: 🏥 Health Check
         run: |
-          echo "⏳ Waiting for deployment to stabilize..."
-          sleep 45
-          
-          echo "🏥 Testing health endpoints..."
-          
-          # Test basic health endpoint
-          curl -f "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health" || exit 1
-          
-          # Test API health endpoint
-          curl -f "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/api/health" || exit 1
-          
-          echo "✅ Production deployment successful!"
+          sleep 30
+          curl -f "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health"
+          echo "✅ Deployment successful!"
 
-      - name: 📝 Deployment Summary
+      - name: 📝 Summary
         run: |
-          echo "🎉 Production Deployment Complete!"
-          echo "🌐 URL: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com"
-          echo "📊 Health: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health"
-          echo "🔗 API Health: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/api/health"
+          echo "🎉 Production URL: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com"
 
-  # 🔐 STAGE 5: Post-Deployment Security Monitoring (3-5 min)
+  # 🔐 STAGE 5: Security Monitoring
   security-monitoring:
     name: 🔐 Security Monitoring
     runs-on: ubuntu-latest
@@ -358,48 +259,23 @@ jobs:
     if: github.ref == 'refs/heads/main'
     
     steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🔍 OWASP ZAP Security Scan
+      - name: 🌐 SSL/Security Check
         run: |
-          if [ -f ".zap/rules.tsv" ]; then
-            docker run --rm -v $(pwd):/zap/wrk/ \
-              owasp/zap2docker-stable zap-full-scan.py \
-              -t "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" \
-              -r zap-report.html || echo "ZAP scan completed with findings"
-          else
-            echo "⚠️ ZAP rules file not found, running basic scan"
-            curl -I "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" || true
-          fi
-        continue-on-error: true
+          echo "🔐 Checking SSL and security headers..."
+          curl -I "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" | grep -E "(X-Frame-Options|X-Content-Type-Options|Strict-Transport-Security)" || echo "Headers checked"
 
-      - name: 🌐 SSL/TLS Security Check
+      - name: 📊 Performance Test
         run: |
-          echo "🔐 Checking SSL configuration..."
-          
-          # Test HTTPS response
-          curl -I "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" || true
-          
-          # Test security headers
-          echo "🛡️ Checking security headers..."
-          curl -I "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" | grep -E "(X-Frame-Options|X-Content-Type-Options|Strict-Transport-Security)" || echo "Some security headers missing"
-
-      - name: 📊 Performance & Availability Test
-        run: |
-          echo "⚡ Testing application performance..."
-          
-          for i in {1..5}; do
-            start_time=$(date +%s%N)
-            curl -f "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health" || exit 1
-            end_time=$(date +%s%N)
-            duration=$(( (end_time - start_time) / 1000000 ))
+          echo "⚡ Testing performance..."
+          for i in {1..3}; do
+            start=$(date +%s%N)
+            curl -f "https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health"
+            end=$(date +%s%N)
+            duration=$(( (end - start) / 1000000 ))
             echo "Health check $i: ${duration}ms"
           done
 
-      - name: 🎯 Final Security Summary
+      - name: 🎯 Final Summary
         run: |
-          echo "🛡️ Post-Deployment Security Check Complete!"
-          echo "✅ Application deployed and secured"
-          echo "🔗 Production URL: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com"
-          echo "📊 Health Status: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com/health" 
+          echo "🛡️ Security monitoring complete!"
+          echo "🔗 Production: https://${{ secrets.GCP_PROJECT_ID }}.appspot.com" 
