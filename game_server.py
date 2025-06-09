@@ -147,6 +147,37 @@ def submit_score():
             "message": "Missing required fields"
         }), 400
     
+    # Validate data types and values
+    if not isinstance(data.get('player_name'), str) or not data['player_name'].strip():
+        return jsonify({
+            "status": "error",
+            "message": "Player name must be a non-empty string"
+        }), 400
+        
+    if not isinstance(data.get('score'), (int, float)) or data['score'] < 0:
+        return jsonify({
+            "status": "error",
+            "message": "Score must be a non-negative number"
+        }), 400
+        
+    if not isinstance(data.get('level'), int) or data['level'] < 1:
+        return jsonify({
+            "status": "error",
+            "message": "Level must be a positive integer"
+        }), 400
+        
+    if not isinstance(data.get('threats_found'), int) or data['threats_found'] < 0:
+        return jsonify({
+            "status": "error",
+            "message": "Threats found must be a non-negative integer"
+        }), 400
+        
+    if not isinstance(data.get('accuracy'), (int, float)) or not (0 <= data['accuracy'] <= 100):
+        return jsonify({
+            "status": "error",
+            "message": "Accuracy must be a number between 0 and 100"
+        }), 400
+    
     # Create new player entry
     new_entry = {
         "name": data['player_name'],
