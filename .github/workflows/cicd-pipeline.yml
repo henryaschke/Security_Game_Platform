@@ -242,12 +242,6 @@ jobs:
         with:
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
 
-      - name: 🔧 Enable Required APIs
-        run: |
-          gcloud services enable cloudbuild.googleapis.com
-          gcloud services enable run.googleapis.com
-          gcloud services enable containerregistry.googleapis.com
-
       - name: 🚀 Deploy to Cloud Run (Staging)
         run: |
           cd dist/
@@ -325,12 +319,6 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
-
-      - name: 🔧 Enable Required APIs
-        run: |
-          gcloud services enable cloudbuild.googleapis.com
-          gcloud services enable run.googleapis.com
-          gcloud services enable containerregistry.googleapis.com
 
       - name: 🚀 Deploy to Cloud Run
         run: |
