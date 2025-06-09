@@ -1,0 +1,30 @@
+{
+  "name": "cyber-ninja-academy",
+  "version": "1.0.0",
+  "description": "Cyber Ninja Academy - Interactive Security Training Platform",
+  "main": "game_server.py",
+  "scripts": {
+    "test": "echo 'No Node.js tests configured'",
+    "lint": "eslint *.js --fix",
+    "security-check": "eslint *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henryaschke/Security_Game_Platform.git"
+  },
+  "keywords": ["security", "training", "cybersecurity", "education"],
+  "author": "Henry Aschke",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/henryaschke/Security_Game_Platform/issues"
+  },
+  "homepage": "https://github.com/henryaschke/Security_Game_Platform#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0",
+    "eslint-plugin-security": "^3.0.1"
+  }
+}
