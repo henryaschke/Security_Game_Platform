@@ -250,36 +250,45 @@ jobs:
           gcloud auth list
           echo "✅ Authentication configured"
 
-      - name: 🚀 Deploy to Cloud Run (Staging)
+      - name: 🔨 Build & Submit Container
+        id: build
         run: |
           cd dist/
           echo "📋 Files in dist:"
           ls -la
           echo "📝 Dockerfile content:"
           cat Dockerfile
-          echo "🚀 Starting Cloud Run staging deployment..."
           
           # Set variables
           SERVICE_NAME="cyber-ninja-academy-staging"
-          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
-          VERSION="staging-v$(date +%Y%m%d-%H%M%S)"
+          VERSION="staging-v${{ github.sha }}"
           
-          # Build container (proper non-streaming approach)
           echo "🔨 Building container image..."
           BUILD_ID=$(gcloud builds submit \
             --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --format='value(id)' \
-            --quiet \
             .)
-          echo "📋 Build ID: $BUILD_ID"
-          
-          # Wait for build completion (avoids streaming issues)
+          echo "BUILD_ID=$BUILD_ID" >> "$GITHUB_OUTPUT"
+          echo "SERVICE_NAME=$SERVICE_NAME" >> "$GITHUB_OUTPUT" 
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "📋 Build submitted with ID: $BUILD_ID"
+
+      - name: ⏳ Wait for Build Completion
+        run: |
           echo "⏳ Waiting for build to complete..."
-          gcloud builds wait "$BUILD_ID" \
+          gcloud builds wait "${{ steps.build.outputs.BUILD_ID }}" \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --quiet
           echo "✅ Container build completed successfully"
+
+      - name: 🚀 Deploy to Cloud Run (Staging)
+        run: |
+          SERVICE_NAME="${{ steps.build.outputs.SERVICE_NAME }}"
+          VERSION="${{ steps.build.outputs.VERSION }}"
+          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
+          
+          echo "🚀 Starting Cloud Run staging deployment..."
           
           # Deploy to Cloud Run
           gcloud run deploy ${SERVICE_NAME} \
@@ -350,36 +359,45 @@ jobs:
           gcloud auth list
           echo "✅ Authentication configured"
 
-      - name: 🚀 Deploy to Cloud Run
+      - name: 🔨 Build & Submit Container
+        id: build
         run: |
           cd dist/
           echo "📋 Files in dist:"
           ls -la
           echo "📝 Dockerfile content:"
           cat Dockerfile
-          echo "🚀 Starting Cloud Run deployment..."
           
           # Set variables
           SERVICE_NAME="cyber-ninja-academy"
-          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
-          VERSION="v$(date +%Y%m%d-%H%M%S)"
+          VERSION="v${{ github.sha }}"
           
-          # Build container (proper non-streaming approach)
           echo "🔨 Building container image..."
           BUILD_ID=$(gcloud builds submit \
             --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --format='value(id)' \
-            --quiet \
             .)
-          echo "📋 Build ID: $BUILD_ID"
-          
-          # Wait for build completion (avoids streaming issues)
+          echo "BUILD_ID=$BUILD_ID" >> "$GITHUB_OUTPUT"
+          echo "SERVICE_NAME=$SERVICE_NAME" >> "$GITHUB_OUTPUT" 
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "📋 Build submitted with ID: $BUILD_ID"
+
+      - name: ⏳ Wait for Build Completion
+        run: |
           echo "⏳ Waiting for build to complete..."
-          gcloud builds wait "$BUILD_ID" \
+          gcloud builds wait "${{ steps.build.outputs.BUILD_ID }}" \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --quiet
           echo "✅ Container build completed successfully"
+
+      - name: 🚀 Deploy to Cloud Run
+        run: |
+          SERVICE_NAME="${{ steps.build.outputs.SERVICE_NAME }}"
+          VERSION="${{ steps.build.outputs.VERSION }}"
+          REGION="${{ secrets.GCP_REGION || 'us-central1' }}"
+          
+          echo "🚀 Starting Cloud Run deployment..."
           
           # Deploy to Cloud Run
           gcloud run deploy ${SERVICE_NAME} \
