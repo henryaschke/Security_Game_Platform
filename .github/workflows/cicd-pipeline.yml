@@ -278,10 +278,35 @@ jobs:
       - name: ⏳ Wait for Build Completion
         run: |
           echo "⏳ Waiting for build to complete..."
-          gcloud builds wait "${{ steps.build.outputs.BUILD_ID }}" \
-            --project=${{ secrets.GCP_PROJECT_ID }} \
-            --quiet
-          echo "✅ Container build completed successfully"
+          BUILD_ID="${{ steps.build.outputs.BUILD_ID }}"
+          PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}"
+          
+          # Poll build status until completion (compatible with all gcloud versions)
+          while true; do
+            STATUS=$(gcloud builds describe "$BUILD_ID" \
+              --project="$PROJECT_ID" \
+              --format='value(status)')
+            echo "Build status: $STATUS"
+            
+            case "$STATUS" in
+              "SUCCESS")
+                echo "✅ Container build completed successfully"
+                break
+                ;;
+              "FAILURE"|"TIMEOUT"|"CANCELLED")
+                echo "❌ Build failed with status: $STATUS"
+                exit 1
+                ;;
+              "WORKING"|"PENDING"|"QUEUED")
+                echo "⏳ Build in progress, waiting 10 seconds..."
+                sleep 10
+                ;;
+              *)
+                echo "Unknown status: $STATUS, waiting 10 seconds..."
+                sleep 10
+                ;;
+            esac
+          done
 
       - name: 🚀 Deploy to Cloud Run (Staging)
         run: |
@@ -388,10 +413,35 @@ jobs:
       - name: ⏳ Wait for Build Completion
         run: |
           echo "⏳ Waiting for build to complete..."
-          gcloud builds wait "${{ steps.build.outputs.BUILD_ID }}" \
-            --project=${{ secrets.GCP_PROJECT_ID }} \
-            --quiet
-          echo "✅ Container build completed successfully"
+          BUILD_ID="${{ steps.build.outputs.BUILD_ID }}"
+          PROJECT_ID="${{ secrets.GCP_PROJECT_ID }}"
+          
+          # Poll build status until completion (compatible with all gcloud versions)
+          while true; do
+            STATUS=$(gcloud builds describe "$BUILD_ID" \
+              --project="$PROJECT_ID" \
+              --format='value(status)')
+            echo "Build status: $STATUS"
+            
+            case "$STATUS" in
+              "SUCCESS")
+                echo "✅ Container build completed successfully"
+                break
+                ;;
+              "FAILURE"|"TIMEOUT"|"CANCELLED")
+                echo "❌ Build failed with status: $STATUS"
+                exit 1
+                ;;
+              "WORKING"|"PENDING"|"QUEUED")
+                echo "⏳ Build in progress, waiting 10 seconds..."
+                sleep 10
+                ;;
+              *)
+                echo "Unknown status: $STATUS, waiting 10 seconds..."
+                sleep 10
+                ;;
+            esac
+          done
 
       - name: 🚀 Deploy to Cloud Run
         run: |
