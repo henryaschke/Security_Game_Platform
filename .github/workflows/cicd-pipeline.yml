@@ -263,11 +263,12 @@ jobs:
           SERVICE_NAME="cyber-ninja-academy-staging"
           VERSION="staging-v${{ github.sha }}"
           
-          echo "🔨 Building container image..."
+          echo "🔨 Building container image (no streaming)..."
           BUILD_ID=$(gcloud builds submit \
             --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --format='value(id)' \
+            --async \
             .)
           echo "BUILD_ID=$BUILD_ID" >> "$GITHUB_OUTPUT"
           echo "SERVICE_NAME=$SERVICE_NAME" >> "$GITHUB_OUTPUT" 
@@ -372,11 +373,12 @@ jobs:
           SERVICE_NAME="cyber-ninja-academy"
           VERSION="v${{ github.sha }}"
           
-          echo "🔨 Building container image..."
+          echo "🔨 Building container image (no streaming)..."
           BUILD_ID=$(gcloud builds submit \
             --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/${SERVICE_NAME}:${VERSION} \
             --project=${{ secrets.GCP_PROJECT_ID }} \
             --format='value(id)' \
+            --async \
             .)
           echo "BUILD_ID=$BUILD_ID" >> "$GITHUB_OUTPUT"
           echo "SERVICE_NAME=$SERVICE_NAME" >> "$GITHUB_OUTPUT" 
