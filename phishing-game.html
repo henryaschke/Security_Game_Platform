@@ -3,415 +3,544 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🕵️ Ninja Trap Detection Dojo - Email Infiltration Training</title>
+    <title>CyberSmart - Phishing Detection Training Module</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path fill='%230ea5e9' d='M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9v28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.4 25.7-13.4 39.6C12.3 461.1 27.2 480 48 480c7.8 0 15-2.9 20.8-8.1l35.2-31.6c9.5-8.5 22.8-13.2 36.7-13.2H304c30.9 0 56 25.1 56 56s-25.1 56-56 56H112c-17.7 0-32 14.3-32 32s14.3 32 32 32H304c66.3 0 120-53.7 120-120c0-10.5-1.4-20.7-4-30.4c2.6 9.7 4 19.9 4 30.4c0 66.3-53.7 120-120 120s-120-53.7-120-120c0-30.9 11.7-59.1 30.8-80.2c-4.9-10.9-7.8-23.1-7.8-35.8v-28.1c0-30.2 9.4-58.9 25.1-82.3c-8.6-4.3-18.3-6.6-28.1-6.6c-35.3 0-64 28.7-64 64v112c0 8.8 7.2 16 16 16s16-7.2 16-16V224c0-17.7 14.3-32 32-32s32 14.3 32 32v112c0 8.8 7.2 16 16 16s16-7.2 16-16V224c0-35.3-28.7-64-64-64c-9.8 0-19.5 2.2-28.1 6.6C201.4 140.1 210.8 111.4 210.8 81.2c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 35.3 28.7 64 64 64c9.8 0 19.5-2.2 28.1-6.6c15.7 23.4 25.1 52.1 25.1 82.3v28.1c0 12.7-2.9 24.9-7.8 35.8c19.1 21.1 30.8 49.3 30.8 80.2c0 66.3-53.7 120-120 120s-120-53.7-120-120c0-10.5 1.4-20.7 4-30.4c-2.6-9.7-4-19.9-4-30.4c0-66.3 53.7-120 120-120c30.9 0 56-25.1 56-56s-25.1-56-56-56H192c-13.9 0-27.2 4.7-36.7 13.2L120.1 71.9C114.3 77.1 107.1 80 99.3 80c-20.8 0-35.7-18.9-35.7-40.6c0-13.9 6.9-26.6 13.4-39.6C88.5 22.7 99.3-6.6 99.3-35V-63.1c0-8.8 7.2-16 16-16s16 7.2 16 16V-35c0 28.4 10.8 57.7 22.3 80.8c6.5 13 13.4 25.7 13.4 39.6c0 21.7-14.9 40.6-35.7 40.6c-7.8 0-15-2.9-20.8-8.1L75.3 86.3c-9.5-8.5-22.8-13.2-36.7-13.2H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H38.6c13.9 0 27.2-4.7 36.7-13.2l35.2-31.6c5.8-5.2 13-8.1 20.8-8.1c20.8 0 35.7 18.9 35.7 40.6c0 13.9-6.9 26.6-13.4 39.6C141.2 165 130.4 194.3 130.4 222.7v28.1c0 30.2-9.4 58.9-25.1 82.3c8.6 4.3 18.3 6.6 28.1 6.6c35.3 0 64-28.7 64-64V163.9c0-8.8-7.2-16-16-16s-16 7.2-16 16v111.8c0 17.7-14.3 32-32 32s-32-14.3-32-32V163.9c0-8.8-7.2-16-16-16s-16 7.2-16 16v111.8c0 35.3 28.7 64 64 64c9.8 0 19.5-2.2 28.1-6.6c-15.7-23.4-25.1-52.1-25.1-82.3v-28.1c0-32.1 9.4-62.6 25.8-88.4L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32z'/></svg>" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* 🥷 NINJA TRAP DETECTION DOJO SPECIFIC STYLES 🥷 */
+        /* Phishing Detection Module Specific Styles */
         
-        .game-container {
+        .detection-container {
             max-width: 1000px;
             margin: 2rem auto;
-            background: linear-gradient(135deg, var(--ninja-dark), var(--ninja-gray));
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+            background: var(--gradient-surface);
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-xl);
             overflow: hidden;
-            border: 1px solid var(--ninja-green);
+            border: 1px solid var(--border-color);
             position: relative;
         }
 
-        .game-container::before {
+        .detection-container::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--ninja-red), var(--ninja-orange), var(--ninja-red));
-            animation: dangerScan 2s ease-in-out infinite;
+            background: var(--gradient-secondary);
         }
 
-        .game-header {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 150, 255, 0.2));
-            color: var(--ninja-green);
+        .module-header {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--text-primary);
             padding: 2rem;
             text-align: center;
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--ninja-green);
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .game-header h1 {
-            font-family: 'Orbitron', monospace;
+        .module-header h1 {
             font-size: 2.5rem;
-            text-shadow: 0 0 20px var(--ninja-green);
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
-        .game-header p {
-            color: var(--neon-cyan);
-            text-shadow: 0 0 10px var(--neon-cyan);
+        .module-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
         }
 
-        .game-stats {
+        .module-icon-large {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-purple);
+            animation: scanPulse 3s infinite ease-in-out;
+        }
+
+        @keyframes scanPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .detection-stats {
             display: flex;
             justify-content: space-around;
-            background: rgba(0, 255, 65, 0.1);
+            background: rgba(139, 92, 246, 0.05);
             padding: 1rem;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .stat-item {
             text-align: center;
-            color: var(--ninja-green);
+            color: var(--text-primary);
         }
 
         .stat-number {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 10px var(--neon-cyan);
-            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: var(--accent-purple);
+            font-family: 'JetBrains Mono', monospace;
+            display: block;
+            margin-bottom: 0.25rem;
         }
 
-        .email-container {
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .analysis-container {
             padding: 2rem;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(26, 26, 26, 0.9));
-            border-radius: 15px;
+            background: var(--primary-bg);
+            border-radius: var(--border-radius-lg);
             margin: 1rem;
-            border: 1px solid rgba(0, 255, 65, 0.3);
+            border: 1px solid var(--border-color);
         }
 
         .email-frame {
-            border: 2px solid var(--ninja-green);
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--ninja-dark), var(--ninja-gray));
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            background: var(--card-bg);
             margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.2);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
         }
 
         .email-header {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 255, 255, 0.1));
+            background: rgba(139, 92, 246, 0.1);
             padding: 1rem;
-            border-bottom: 1px solid var(--ninja-green);
-            font-family: 'Orbitron', monospace;
-            font-size: 0.9rem;
-            color: var(--neon-cyan);
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
             backdrop-filter: blur(5px);
         }
 
         .email-field {
             margin: 0.5rem 0;
             cursor: pointer;
-            padding: 0.2rem;
-            border-radius: 4px;
-            transition: all 0.3s;
-            color: var(--neon-cyan);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
         }
 
         .email-field:hover {
-            background: rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--text-primary);
         }
 
         .email-field.suspicious {
-            background: rgba(220, 53, 69, 0.2);
-            border: 1px dashed var(--ninja-red);
-            box-shadow: 0 0 10px rgba(220, 53, 69, 0.3);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--accent-red);
+            color: var(--accent-red);
         }
 
         .email-field.safe {
-            background: rgba(0, 255, 65, 0.2);
-            border: 1px dashed var(--ninja-green);
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
         }
 
         .email-body {
             padding: 1.5rem;
             line-height: 1.6;
-            color: var(--ninja-green);
-            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-primary);
+            background: var(--surface-bg);
         }
 
         .clickable-element {
             cursor: pointer;
-            padding: 0.1rem 0.2rem;
-            border-radius: 3px;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
+            position: relative;
+            display: inline;
         }
 
         .clickable-element:hover {
-            background: rgba(255, 255, 0, 0.3);
-            box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 2px;
+            padding: 1px 2px;
         }
 
         .clickable-element.found-threat {
-            background: rgba(255, 0, 0, 0.2);
-            border: 1px solid #ff0000;
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
         }
 
         .clickable-element.found-safe {
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid #00aa00;
+            background: rgba(107, 114, 128, 0.2);
+            border-color: #6b7280;
+            color: #6b7280;
         }
 
-        .game-controls {
+        .detection-controls {
             padding: 2rem;
             text-align: center;
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 255, 255, 0.1));
-            border-top: 1px solid rgba(0, 255, 65, 0.3);
+            background: rgba(139, 92, 246, 0.05);
+            border-top: 1px solid var(--border-color);
         }
 
-        .btn-game {
-            padding: 0.75rem 2rem;
-            margin: 0.5rem;
+        .detection-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            margin: 0 8px;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--border-radius-md);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Orbitron', monospace;
+            transition: all 0.3s ease;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
-        .btn-submit {
-            background: linear-gradient(135deg, var(--ninja-green), var(--matrix-green));
-            color: var(--ninja-black);
-            box-shadow: 0 4px 15px rgba(0, 255, 65, 0.4);
+        .detection-btn.submit {
+            background: var(--gradient-secondary);
+            color: white;
+            box-shadow: var(--shadow-md);
         }
 
-        .btn-submit:hover {
-            background: linear-gradient(135deg, var(--matrix-green), var(--ninja-green));
+        .detection-btn.submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 255, 65, 0.6);
+            box-shadow: var(--shadow-lg);
         }
 
-        .btn-next {
-            background: linear-gradient(135deg, var(--ninja-blue), var(--neon-cyan));
-            color: var(--ninja-black);
-            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+        .detection-btn.next {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
         }
 
-        .btn-next:hover {
-            background: linear-gradient(135deg, var(--neon-cyan), var(--ninja-blue));
+        .detection-btn.next:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.6);
+            box-shadow: var(--shadow-lg);
         }
 
-        .btn-hint {
-            background: linear-gradient(135deg, var(--ninja-orange), var(--ninja-red));
-            color: var(--ninja-black);
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        .detection-btn.secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
         }
 
-        .btn-hint:hover {
-            background: linear-gradient(135deg, var(--ninja-red), var(--ninja-orange));
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.6);
+        .detection-btn.secondary:hover {
+            background: var(--surface-bg);
+            color: var(--text-primary);
+            border-color: var(--accent-purple);
         }
 
-        .feedback-panel {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .feedback-panel {
-            background: linear-gradient(135deg, var(--ninja-dark), var(--ninja-gray));
-            border: 2px solid var(--ninja-green);
-            color: var(--ninja-green);
+        .back-nav {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(26, 31, 41, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
 
-        .feedback-correct {
-            background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 150, 255, 0.2));
-            color: var(--ninja-green);
-            border: 2px solid var(--ninja-green);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+        .back-nav:hover {
+            background: var(--surface-bg);
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
         }
 
-        .feedback-incorrect {
-            background: linear-gradient(135deg, rgba(220, 53, 69, 0.2), rgba(255, 107, 53, 0.2));
-            color: var(--ninja-red);
-            border: 2px solid var(--ninja-red);
-            box-shadow: 0 0 20px rgba(220, 53, 69, 0.4);
+        .threat-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .threat-indicators {
-            background: linear-gradient(135deg, var(--ninja-dark), var(--ninja-gray));
-            border: 1px solid var(--ninja-green);
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.2);
+        .threat-indicator.high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
         }
 
-        .threat-indicators h3 {
-            color: var(--ninja-red);
-            font-family: 'Orbitron', monospace;
-            text-shadow: 0 0 15px var(--ninja-red);
+        .threat-indicator.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-orange);
+            border: 1px solid var(--accent-orange);
         }
 
-        .indicator {
+        .threat-indicator.low {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+        }
+
+        .analysis-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .analysis-panel h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .findings-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .findings-list li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
-            padding: 0.5rem;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .findings-list li:last-child {
+            border-bottom: none;
+        }
+
+        .findings-list li i {
+            width: 16px;
+        }
+
+        .findings-list li.threat i {
+            color: var(--accent-red);
+        }
+
+        .findings-list li.safe i {
+            color: var(--accent-green);
+        }
+
+        .findings-list li.warning i {
+            color: var(--accent-orange);
+        }
+
+        .progress-indicator {
+            background: var(--surface-bg);
+            border-radius: var(--border-radius-md);
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--primary-bg);
+            border-radius: 4px;
+            overflow: hidden;
             margin: 0.5rem 0;
-            border-radius: 6px;
-            transition: all 0.3s;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            color: var(--neon-cyan);
         }
 
-        .indicator.found {
-            background: rgba(0, 255, 65, 0.2);
-            border: 1px solid var(--ninja-green);
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
-            color: var(--ninja-green);
-        }
+                 .progress-fill {
+             height: 100%;
+             background: var(--gradient-secondary);
+             border-radius: 4px;
+             transition: width 0.3s ease;
+         }
 
-        .indicator.missed {
-            background: rgba(220, 53, 69, 0.2);
-            border: 1px solid var(--ninja-red);
-            box-shadow: 0 0 10px rgba(220, 53, 69, 0.4);
-            color: var(--ninja-red);
-        }
+         .indicator {
+             display: flex;
+             align-items: center;
+             padding: 0.75rem;
+             margin: 0.5rem 0;
+             border-radius: var(--border-radius-md);
+             transition: all 0.3s ease;
+             background: var(--surface-bg);
+             border: 1px solid var(--border-color);
+             color: var(--text-secondary);
+         }
 
-        @media (max-width: 768px) {
-            .game-container {
-                margin: 1rem;
-            }
-            
-            .email-container {
-                padding: 1rem;
-            }
-        }
+         .indicator.found {
+             background: rgba(16, 185, 129, 0.1);
+             border-color: var(--accent-green);
+             color: var(--accent-green);
+         }
+
+         .indicator.missed {
+             background: rgba(239, 68, 68, 0.1);
+             border-color: var(--accent-red);
+             color: var(--accent-red);
+         }
+
+         .feedback-panel {
+             margin-top: 2rem;
+             padding: 1.5rem;
+             border-radius: var(--border-radius-lg);
+             display: none;
+             border: 1px solid var(--border-color);
+         }
+
+         .feedback-correct {
+             background: rgba(16, 185, 129, 0.1);
+             border-color: var(--accent-green);
+             color: var(--text-primary);
+         }
+
+         .feedback-incorrect {
+             background: rgba(239, 68, 68, 0.1);
+             border-color: var(--accent-red);
+             color: var(--text-primary);
+         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="nav-brand">
-                <i class="fas fa-user-ninja"></i>
-                <h1 class="glitch-text">CYBER NINJA ACADEMY</h1>
-            </div>
-            <nav class="nav-menu">
-                <a href="index.html" class="nav-link">🥷 RETURN TO HIDEOUT</a>
-            </nav>
+    <!-- Tech Background -->
+    <div class="tech-bg">
+        <div class="grid-pattern"></div>
+        <div class="floating-elements">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-shield-alt"></i>
+            <i class="fas fa-envelope"></i>
+            <i class="fas fa-exclamation-triangle"></i>
+            <i class="fas fa-eye"></i>
+            <i class="fas fa-bug"></i>
         </div>
-    </header>
+    </div>
 
-    <main class="main-content">
-        <div class="game-container">
-            <div class="game-header">
-                <h1 class="glitch-text"><i class="fas fa-mask"></i> NINJA TRAP DETECTION DOJO</h1>
-                <p>⚠️ CLASSIFIED MISSION ⚠️<br/>Infiltrate the enemy email and identify all cyber traps! 🕵️🥷</p>
+    <!-- Back Navigation -->
+    <a href="index.html" class="back-nav">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="detection-container">
+        <div class="module-header">
+            <div class="module-icon-large">
+                <i class="fas fa-search"></i>
             </div>
-
-            <div class="game-stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="currentLevel">1</div>
-                    <div>Level</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="score">0</div>
-                    <div>Score</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="threatsFound">0</div>
-                    <div>Threats Found</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="accuracy">100%</div>
-                    <div>Accuracy</div>
-                </div>
-            </div>
-
-            <div class="email-container">
-                <div class="email-frame">
-                    <div class="email-header">
-                        <div class="email-field" data-type="from">
-                            <strong>From:</strong> <span id="emailFrom" class="clickable-element">security@amaz0n-verification.com</span>
-                        </div>
-                        <div class="email-field" data-type="to">
-                            <strong>To:</strong> <span id="emailTo">user@company.com</span>
-                        </div>
-                        <div class="email-field" data-type="subject">
-                            <strong>Subject:</strong> <span id="emailSubject" class="clickable-element">URGENT: Verify Your Account Within 24 Hours</span>
-                        </div>
-                        <div class="email-field" data-type="date">
-                            <strong>Date:</strong> <span id="emailDate">Today 3:47 AM</span>
-                        </div>
-                    </div>
-                    <div class="email-body" id="emailBody">
-                        <p>Dear Valued Customer,</p>
-                        
-                        <p>We have detected unusual activity on your account. To ensure your security, please 
-                        <span class="clickable-element" data-threat="malicious-link">verify your account immediately</span> 
-                        by clicking the link below.</p>
-                        
-                        <p><strong>Account Status:</strong> <span style="color: red;">SUSPENDED</span></p>
-                        
-                        <p>Please click here to verify: 
-                        <a href="#" class="clickable-element" data-threat="malicious-link" style="color: blue;">
-                            http://amaz0n-verification-secure.tk/verify?user=12345
-                        </a></p>
-                        
-                        <p>If you do not verify within 24 hours, your account will be permanently closed.</p>
-                        
-                        <p>Thank you for your immediate attention to this matter.</p>
-                        
-                        <p>Sincerely,<br>
-                        <span class="clickable-element" data-threat="impersonation">Amazon Security Team</span><br>
-                        <span style="font-size: 0.8em; color: #666;">
-                            This email was sent from: <span class="clickable-element" data-threat="suspicious-domain">noreply@amaz0n-verification.com</span>
-                        </span></p>
-                    </div>
-                </div>
-
-                <div class="threat-indicators">
-                    <h3><i class="fas fa-crosshairs"></i> TARGET ACQUISITION OBJECTIVES:</h3>
-                    <div class="indicator" data-indicator="suspicious-domain">
-                        <i class="fas fa-globe"></i>
-                        <span style="margin-left: 0.5rem;">🌐 Infiltrated domain signatures</span>
-                    </div>
-                    <div class="indicator" data-indicator="malicious-link">
-                        <i class="fas fa-link"></i>
-                        <span style="margin-left: 0.5rem;">🔗 Hidden trap mechanisms</span>
-                    </div>
-                    <div class="indicator" data-indicator="impersonation">
-                        <i class="fas fa-mask"></i>
-                        <span style="margin-left: 0.5rem;">🎭 Enemy disguise tactics</span>
-                    </div>
-                    <div class="indicator" data-indicator="urgency">
-                        <i class="fas fa-clock"></i>
-                        <span style="margin-left: 0.5rem;">⏰ Psychological manipulation techniques</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-controls">
-                <button class="btn-game btn-submit" onclick="submitAnalysis()">
-                    <i class="fas fa-crosshairs"></i> EXECUTE MISSION
-                </button>
-                <button class="btn-game btn-hint" onclick="showHint()" id="hintBtn">
-                    <i class="fas fa-eye"></i> NINJA VISION
-                </button>
-                <button class="btn-game btn-next" onclick="nextLevel()" id="nextBtn" style="display: none;">
-                    <i class="fas fa-forward"></i> NEXT INFILTRATION
-                </button>
-            </div>
-
-            <div class="feedback-panel" id="feedbackPanel">
-                <h3 id="feedbackTitle"></h3>
-                <div id="feedbackContent"></div>
-            </div>
+            <h1>Phishing Detection Training</h1>
+            <p>Learn to identify and analyze suspicious emails to protect against cyber threats</p>
         </div>
-    </main>
 
-    <script src="phishing-game.js"></script>
-</body>
-</html> 
+                 <div class="detection-stats">
+             <div class="stat-item">
+                 <span class="stat-number" id="threatsFound">0</span>
+                 <div class="stat-label">Threats Found</div>
+             </div>
+             <div class="stat-item">
+                 <span class="stat-number" id="score">0</span>
+                 <div class="stat-label">Score</div>
+             </div>
+             <div class="stat-item">
+                 <span class="stat-number" id="accuracy">100%</span>
+                 <div class="stat-label">Accuracy Rate</div>
+             </div>
+             <div class="stat-item">
+                 <span class="stat-number" id="currentLevel">1</span>
+                 <div class="stat-label">Level</div>
+             </div>
+         </div>
+
+        <div class="analysis-container">
+            <div class="progress-indicator">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="color: var(--text-secondary); font-size: 0.875rem;">Email Analysis Progress</span>
+                    <span id="progressText" style="color: var(--text-muted); font-size: 0.875rem;">0 of 5 elements checked</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progressBar" class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="email-frame">
+                <div class="email-header">
+                                         <div class="email-field" data-type="from">
+                         <strong>From:</strong> <span id="emailFrom" class="clickable-element" data-threat="suspicious-domain">security@amaz0n-verification.com</span>
+                     </div>
+                     <div class="email-field" data-type="to">
+                         <strong>To:</strong> <span id="emailTo">user@company.com</span>
+                     </div>
+                     <div class="email-field" data-type="subject">
+                         <strong>Subject:</strong> <span id="emailSubject" class="clickable-element" data-threat="urgency">URGENT: Verify Your Account Within 24 Hours</span>
+                     </div>
+                     <div class="email-field" data-type="date">
+                         <strong>Date:</strong> <span id="emailDate">Today 3:47 AM</span>
+                     </div>
+                </div>
+                                 <div class="email-body" id="emailBody">
+                     <p>Dear Valued Customer,</p>
+                     
+                     <p>We have detected unusual activity on your account. To ensure your security, please 
+                     <span class="clickable-element" data-threat="malicious-link">verify your account immediately</span> 
+                     by clicking the link below.</p>
+                     
+                     <p><strong>Account Status:</strong> <span style="color: red;">SUSPENDED</span></p>
+                     
+                     <p>Please click here to verify: 
+                     <a href="#" class="clickable-element" data-threat="malicious-link" style="color: blue;">
+                         http://amaz0n-verification-secure.tk/verify?user=12345
+                     </a></p>
+                     
+                     <p>If you do not verify within 24 hours, your account will be permanently closed.</p>
+                     
+                     <p>Thank you for your immediate attention to this matter.</p>
+                     
+                     <p>Sincerely,<br>
+                     <span class="clickable-element" data-threat="impersonation">Amazon Security Team</span><br>
+                     <span style="font-size: 0.8em; color: #666;">
+                         This email was sent from: <span class="clickable-element" data-threat="suspicious-domain">noreply@amaz0n-verification.com</span>
+                     </span></p>
+                 </div>
+            </div>
+
+                         <div class="analysis-panel">
+                 <h4><i class="fas fa-shield-alt"></i> Threat Detection Progress</h4>
+                 <div class="indicator" data-indicator="suspicious-domain">
+                     <i class="fas fa-globe"></i>
+                     <span style="margin-left: 0.5rem;">Suspicious Domain</span>
+                 </div>
+                 <div class="indicator" data-indicator="malicious-link">
+                     <i class="fas fa-link"></i>
+                     <span style="margin-left: 0.5rem;">Malicious Link</span>
+                 </div>
+                 <div class="indicator" data-indicator="impersonation">
+                     <i class="fas fa-mask"></i>
+                     <span style="margin-left: 0.5rem;">Brand Impersonation</span>
+                 </div>
+                 <div class="indicator" data-indicator="urgency">
+                     <i class="fas fa-clock"></i>
+                     <span style="margin-left: 0.5rem;">Urgency Tactics</span>
+                 </div>
+             </div>
+
+                         <div class="detection-controls">
+                 <button class="detection-btn submit" onclick="submitAnalysis()">
+                     <i class="fas fa-search"></i> Submit Analysis
+                 </button>
+                 <button class="detection-btn secondary" onclick="showHint()" id="hintBtn">
+                     <i class="fas fa-lightbulb"></i> Get Hint
+                 </button>
+                 <button class="detection-btn next" onclick="nextLevel()" id="nextBtn" style="display: none;">
+                     <i class="fas fa-arrow-right"></i> Next Level
+                                  </button>
+             </div>
+
+             <div class="feedback-panel" id="feedbackPanel">
+                 <h3 id="feedbackTitle"></h3>
+                 <div id="feedbackContent"></div>
+             </div>
+         </div>
+     </div>
+
+     <script src="phishing-game.js"></script>
+ </body>
+ </html> 

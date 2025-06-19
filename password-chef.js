@@ -525,7 +525,7 @@ function showSuccess(order, orderingBonus = 0, missingIngredients = []) {
     }
     
     successMessage.innerHTML = `
-        <h3>${successEmoji} ${successLevel} RECIPE! ${successEmoji}</h3>
+        <h3>${successEmoji} ${successLevel} ${successEmoji}</h3>
         <p>${order.successMessage}</p>
         <p><strong>📊 Base Points:</strong> +${order.points}</p>
         ${orderingBonus > 0 ? `<p><strong>🎯 Ordering Bonus:</strong> +${orderingBonus} points!</p>` : ''}

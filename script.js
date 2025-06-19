@@ -6,7 +6,7 @@ const modalBody = document.getElementById('modalBody');
 // Navigation functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize the page
-    console.log('🛡️ CyberGuard Training Platform loaded');
+    console.log('🚀 CyberSmart Training Platform loaded');
     
     // Load and display user profile
     loadUserProfile();
@@ -23,10 +23,38 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add active class to clicked link
             this.classList.add('active');
             
-            // You can add page navigation logic here later
-            console.log('Navigated to:', this.textContent);
+            // Handle navigation based on link text
+            const linkText = this.textContent.trim();
+            switch(linkText) {
+                case 'Dashboard':
+                    window.location.href = 'index.html';
+                    break;
+                case 'Password Training':
+                    window.location.href = 'password-chef.html';
+                    break;
+                case 'Assessment':
+                    window.location.href = 'assessment.html';
+                    break;
+                case 'Phishing Analysis':
+                    window.location.href = 'phishing-game.html';
+                    break;
+                case 'Analytics':
+                    window.location.href = 'analytics.html';
+                    break;
+                case 'Help':
+                    window.location.href = 'help.html';
+                    break;
+                default:
+                    console.log('Navigated to:', linkText);
+            }
         });
     });
+    
+    // Add modal close button functionality
+    const closeBtn = document.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
     
     // Add smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
@@ -123,11 +151,11 @@ function createWelcomeMessage() {
         const welcomeHtml = `
             <div class="welcome-message" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); 
                  border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center; color: white;">
-                <h3>👋 Welcome to CyberGuard!</h3>
-                <p>Start playing games to track your progress and earn achievements!</p>
+                <h3>👋 Welcome to CyberSmart!</h3>
+                <p>Start your cybersecurity learning journey to track your progress and earn achievements!</p>
                 <button class="btn btn-primary" onclick="window.location.href='password-chef.html'" 
                         style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);">
-                    🍳 Start with Password Chef Academy
+                    🔐 Start with Password Security Training
                 </button>
             </div>
         `;

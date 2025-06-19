@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Assessment - CyberSmart Security Education Platform</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path fill='%230ea5e9' d='M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9v28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.4 25.7-13.4 39.6C12.3 461.1 27.2 480 48 480c7.8 0 15-2.9 20.8-8.1l35.2-31.6c9.5-8.5 22.8-13.2 36.7-13.2H304c30.9 0 56 25.1 56 56s-25.1 56-56 56H112c-17.7 0-32 14.3-32 32s14.3 32 32 32H304c66.3 0 120-53.7 120-120c0-10.5-1.4-20.7-4-30.4c2.6 9.7 4 19.9 4 30.4c0 66.3-53.7 120-120 120s-120-53.7-120-120c0-30.9 11.7-59.1 30.8-80.2c-4.9-10.9-7.8-23.1-7.8-35.8v-28.1c0-30.2 9.4-58.9 25.1-82.3c-8.6-4.3-18.3-6.6-28.1-6.6c-35.3 0-64 28.7-64 64v112c0 8.8 7.2 16 16 16s16-7.2 16-16V224c0-17.7 14.3-32 32-32s32 14.3 32 32v112c0 8.8 7.2 16 16 16s16-7.2 16-16V224c0-35.3-28.7-64-64-64c-9.8 0-19.5 2.2-28.1 6.6C201.4 140.1 210.8 111.4 210.8 81.2c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 35.3 28.7 64 64 64c9.8 0 19.5-2.2 28.1-6.6c15.7 23.4 25.1 52.1 25.1 82.3v28.1c0 12.7-2.9 24.9-7.8 35.8c19.1 21.1 30.8 49.3 30.8 80.2c0 66.3-53.7 120-120 120s-120-53.7-120-120c0-10.5 1.4-20.7 4-30.4c-2.6-9.7-4-19.9-4-30.4c0-66.3 53.7-120 120-120c30.9 0 56-25.1 56-56s-25.1-56-56-56H192c-13.9 0-27.2 4.7-36.7 13.2L120.1 71.9C114.3 77.1 107.1 80 99.3 80c-20.8 0-35.7-18.9-35.7-40.6c0-13.9 6.9-26.6 13.4-39.6C88.5 22.7 99.3-6.6 99.3-35V-63.1c0-8.8 7.2-16 16-16s16 7.2 16 16V-35c0 28.4 10.8 57.7 22.3 80.8c6.5 13 13.4 25.7 13.4 39.6c0 21.7-14.9 40.6-35.7 40.6c-7.8 0-15-2.9-20.8-8.1L75.3 86.3c-9.5-8.5-22.8-13.2-36.7-13.2H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H38.6c13.9 0 27.2-4.7 36.7-13.2l35.2-31.6c5.8-5.2 13-8.1 20.8-8.1c20.8 0 35.7 18.9 35.7 40.6c0 13.9-6.9 26.6-13.4 39.6C141.2 165 130.4 194.3 130.4 222.7v28.1c0 30.2-9.4 58.9-25.1 82.3c8.6 4.3 18.3 6.6 28.1 6.6c35.3 0 64-28.7 64-64V163.9c0-8.8-7.2-16-16-16s-16 7.2-16 16v111.8c0 17.7-14.3 32-32 32s-32-14.3-32-32V163.9c0-8.8-7.2-16-16-16s-16 7.2-16 16v111.8c0 35.3 28.7 64 64 64c9.8 0 19.5-2.2 28.1-6.6c-15.7-23.4-25.1-52.1-25.1-82.3v-28.1c0-32.1 9.4-62.6 25.8-88.4L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32z'/></svg>" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .assessment-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .assessment-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: var(--border-radius-lg);
+        }
+
+        .assessment-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .assessment-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .assessment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .assessment-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .assessment-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        }
+
+        .assessment-type {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .assessment-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .assessment-icon.phishing {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .assessment-icon.password {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .assessment-icon.general {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .assessment-icon.advanced {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .assessment-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .assessment-info p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .assessment-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .assessment-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .assessment-progress {
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--surface-bg);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .assessment-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--surface-bg);
+            border-radius: var(--border-radius-md);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .assessment-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .assessment-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .assessment-btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .assessment-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+        }
+
+        .assessment-btn.secondary {
+            background: var(--surface-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .assessment-btn.secondary:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        .leaderboard-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .leaderboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .leaderboard-filters {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            background: var(--surface-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .leaderboard-table th {
+            font-weight: 600;
+            color: var(--text-primary);
+            background: var(--surface-bg);
+        }
+
+        .leaderboard-table td {
+            color: var(--text-secondary);
+        }
+
+        .rank {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rank-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--surface-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .rank-1 {
+            background: linear-gradient(135deg, #ffd700, #ffc800);
+            color: #000;
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            color: #000;
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #cd7f32, #b36a2c);
+            color: white;
+        }
+
+        .score {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .trend.up {
+            color: var(--accent-green);
+        }
+
+        .trend.down {
+            color: var(--accent-red);
+        }
+
+        .trend.neutral {
+            color: var(--text-muted);
+        }
+
+        .back-nav {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-md);
+            transition: all 0.3s ease;
+            background: var(--surface-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .back-nav:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+
+        .back-nav i {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tech Background -->
+    <div class="tech-bg">
+        <div class="grid-pattern"></div>
+        <div class="floating-elements">
+            <i class="fas fa-clipboard-check"></i>
+            <i class="fas fa-chart-bar"></i>
+            <i class="fas fa-trophy"></i>
+            <i class="fas fa-graduation-cap"></i>
+            <i class="fas fa-brain"></i>
+            <i class="fas fa-shield-alt"></i>
+        </div>
+    </div>
+
+    <!-- Back Navigation -->
+    <a href="index.html" class="back-nav">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="assessment-container">
+        <!-- Assessment Header -->
+        <div class="assessment-header">
+            <h1><i class="fas fa-clipboard-check"></i> Security Assessment Center</h1>
+            <p>Test your cybersecurity knowledge, track your progress, and compete with your colleagues</p>
+        </div>
+
+        <!-- Assessment Grid -->
+        <div class="assessment-grid">
+            <!-- Phishing Assessment -->
+            <div class="assessment-card" data-assessment="phishing">
+                <div class="assessment-type">
+                    <div class="assessment-icon phishing">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="assessment-info">
+                        <h3>Phishing Detection</h3>
+                        <p>Test your ability to identify and analyze suspicious emails</p>
+                    </div>
+                </div>
+                <div class="assessment-meta">
+                    <span><i class="fas fa-clock"></i> 30 minutes</span>
+                    <span><i class="fas fa-star"></i> 100 points</span>
+                </div>
+                <div class="assessment-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                        <span style="color: var(--text-muted);">Progress</span>
+                        <span style="color: var(--primary-color);">75%</span>
+                    </div>
+                </div>
+                <div class="assessment-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12/15</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Top 10%</div>
+                        <div class="stat-label">Ranking</div>
+                    </div>
+                </div>
+                <div class="assessment-actions">
+                    <button class="assessment-btn primary" onclick="window.location.href='phishing-game.html'">
+                        <i class="fas fa-play"></i> Continue Assessment
+                    </button>
+                    <button class="assessment-btn secondary" onclick="window.location.href='phishing-game.html'">
+                        <i class="fas fa-redo"></i> Restart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Password Security -->
+            <div class="assessment-card" data-assessment="password">
+                <div class="assessment-type">
+                    <div class="assessment-icon password">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="assessment-info">
+                        <h3>Password Security</h3>
+                        <p>Evaluate your password creation and management skills</p>
+                    </div>
+                </div>
+                <div class="assessment-meta">
+                    <span><i class="fas fa-clock"></i> 20 minutes</span>
+                    <span><i class="fas fa-star"></i> 80 points</span>
+                </div>
+                <div class="assessment-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                        <span style="color: var(--text-muted);">Progress</span>
+                        <span style="color: var(--primary-color);">100%</span>
+                    </div>
+                </div>
+                <div class="assessment-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15/15</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Top 5%</div>
+                        <div class="stat-label">Ranking</div>
+                    </div>
+                </div>
+                <div class="assessment-actions">
+                    <button class="assessment-btn primary" onclick="window.location.href='password-chef.html'">
+                        <i class="fas fa-medal"></i> View Certificate
+                    </button>
+                    <button class="assessment-btn secondary" onclick="window.location.href='password-chef.html'">
+                        <i class="fas fa-redo"></i> Retake
+                    </button>
+                </div>
+            </div>
+
+            <!-- General Security -->
+            <div class="assessment-card" data-assessment="general">
+                <div class="assessment-type">
+                    <div class="assessment-icon general">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="assessment-info">
+                        <h3>General Security</h3>
+                        <p>Test your overall cybersecurity awareness and knowledge</p>
+                    </div>
+                </div>
+                <div class="assessment-meta">
+                    <span><i class="fas fa-clock"></i> 45 minutes</span>
+                    <span><i class="fas fa-star"></i> 150 points</span>
+                </div>
+                <div class="assessment-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                        <span style="color: var(--text-muted);">Progress</span>
+                        <span style="color: var(--primary-color);">30%</span>
+                    </div>
+                </div>
+                <div class="assessment-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">78%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">6/20</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Top 25%</div>
+                        <div class="stat-label">Ranking</div>
+                    </div>
+                </div>
+                <div class="assessment-actions">
+                    <button class="assessment-btn primary" onclick="showComingSoon()">
+                        <i class="fas fa-play"></i> Continue Assessment
+                    </button>
+                    <button class="assessment-btn secondary" onclick="showComingSoon()">
+                        <i class="fas fa-redo"></i> Restart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Advanced Security -->
+            <div class="assessment-card" data-assessment="advanced">
+                <div class="assessment-type">
+                    <div class="assessment-icon advanced">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="assessment-info">
+                        <h3>Advanced Security</h3>
+                        <p>Challenge yourself with complex security scenarios</p>
+                    </div>
+                </div>
+                <div class="assessment-meta">
+                    <span><i class="fas fa-clock"></i> 60 minutes</span>
+                    <span><i class="fas fa-star"></i> 200 points</span>
+                </div>
+                <div class="assessment-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                        <span style="color: var(--text-muted);">Progress</span>
+                        <span style="color: var(--primary-color);">0%</span>
+                    </div>
+                </div>
+                <div class="assessment-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">--</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0/25</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">--</div>
+                        <div class="stat-label">Ranking</div>
+                    </div>
+                </div>
+                <div class="assessment-actions">
+                    <button class="assessment-btn primary" onclick="showComingSoon()">
+                        <i class="fas fa-lock"></i> Unlock Assessment
+                    </button>
+                    <button class="assessment-btn secondary" onclick="showComingSoon()">
+                        <i class="fas fa-info-circle"></i> Prerequisites
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div class="leaderboard-section">
+            <div class="leaderboard-header">
+                <h2><i class="fas fa-trophy"></i> Assessment Leaderboard</h2>
+                <div class="leaderboard-filters">
+                    <button class="filter-btn active">All Time</button>
+                    <button class="filter-btn">This Month</button>
+                    <button class="filter-btn">This Week</button>
+                    <button class="filter-btn">Department</button>
+                </div>
+            </div>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Score</th>
+                        <th>Completion</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <tr>
+                        <td>
+                            <div class="rank">
+                                <div class="rank-number rank-1">1</div>
+                                <i class="fas fa-crown" style="color: #ffd700;"></i>
+                            </div>
+                        </td>
+                        <td>Sarah Johnson</td>
+                        <td>IT Security</td>
+                        <td><span class="score">950</span></td>
+                        <td>100%</td>
+                        <td><div class="trend up"><i class="fas fa-arrow-up"></i> 2</div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="rank">
+                                <div class="rank-number rank-2">2</div>
+                            </div>
+                        </td>
+                        <td>Michael Chen</td>
+                        <td>Development</td>
+                        <td><span class="score">920</span></td>
+                        <td>95%</td>
+                        <td><div class="trend down"><i class="fas fa-arrow-down"></i> 1</div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="rank">
+                                <div class="rank-number rank-3">3</div>
+                            </div>
+                        </td>
+                        <td>Emily Rodriguez</td>
+                        <td>HR</td>
+                        <td><span class="score">880</span></td>
+                        <td>90%</td>
+                        <td><div class="trend up"><i class="fas fa-arrow-up"></i> 3</div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="rank">
+                                <div class="rank-number">4</div>
+                            </div>
+                        </td>
+                        <td>David Kim</td>
+                        <td>Marketing</td>
+                        <td><span class="score">850</span></td>
+                        <td>85%</td>
+                        <td><div class="trend neutral"><i class="fas fa-minus"></i></div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="rank">
+                                <div class="rank-number">5</div>
+                            </div>
+                        </td>
+                        <td>Lisa Thompson</td>
+                        <td>Finance</td>
+                        <td><span class="score">820</span></td>
+                        <td>80%</td>
+                        <td><div class="trend up"><i class="fas fa-arrow-up"></i> 1</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Show construction notification on page load
+        function showConstructionNotice() {
+            console.log('showConstructionNotice function called');
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                justify-content: center; z-index: 1000; backdrop-filter: blur(5px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius-lg); 
+                     text-align: center; max-width: 450px; border: 1px solid var(--border-color);">
+                    <h3 style="color: var(--accent-orange); margin-bottom: 1rem;">
+                        <i class="fas fa-hard-hat"></i> Work in Progress
+                    </h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                        The Assessment Center is currently being enhanced with new features. 
+                        Feel free to explore and preview what's coming - your feedback is welcome!
+                    </p>
+                    <button onclick="this.closest('div').parentElement.remove()" 
+                            style="background: var(--gradient-primary); color: white; border: none; 
+                                   padding: 0.75rem 1.5rem; border-radius: var(--border-radius-md); cursor: pointer;">
+                        <i class="fas fa-eye"></i> Continue Preview
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            console.log('Modal appended to body');
+            
+            // Close on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+            
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modal.remove();
+                }
+            });
+        }
+
+        // Show coming soon modal
+        function showComingSoon() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                justify-content: center; z-index: 1000; backdrop-filter: blur(5px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: rgba(30, 41, 59, 0.95); padding: 2rem; border-radius: 12px; 
+                     text-align: center; max-width: 400px; border: 1px solid rgba(148, 163, 184, 0.2); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+                    <h3 style="color: #0ea5e9; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 600;">
+                        <i class="fas fa-construction"></i> Feature Coming Soon
+                    </h3>
+                    <p style="color: #94a3b8; margin-bottom: 2rem; line-height: 1.6;">
+                        This assessment module is currently under development. Stay tuned for exciting new challenges!
+                    </p>
+                    <button onclick="this.closest('div').parentElement.remove()" 
+                            style="background: linear-gradient(135deg, #0ea5e9, #3b82f6); color: white; border: none; 
+                                   padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.3s ease;">
+                        <i class="fas fa-check"></i> Got it!
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+            
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modal.remove();
+                }
+            });
+        }
+
+        // Load user data from localStorage
+        function loadUserData() {
+            try {
+                console.log('Loading user data...');
+                const userProfile = JSON.parse(localStorage.getItem('cyberGuardProfile')) || null;
+                const passwordChefData = JSON.parse(localStorage.getItem('passwordChefData')) || null;
+                
+                if (userProfile && passwordChefData) {
+                    console.log('User data found, updating password card...');
+                    // Update Password Security card with real data
+                    const passwordCard = document.querySelector('[data-assessment="password"]');
+                    console.log('Password card element:', passwordCard);
+                    
+                    if (passwordCard) {
+                        const completionPercentage = Math.min(100, (passwordChefData.ordersCompleted || 0) * 20); // 5 orders = 100%
+                        const accuracy = Math.min(100, Math.round((passwordChefData.score || 0) / 10));
+                        
+                        const progressFill = passwordCard.querySelector('.progress-fill');
+                        if (progressFill) {
+                            progressFill.style.width = `${completionPercentage}%`;
+                            const progressText = progressFill.nextElementSibling;
+                            if (progressText) {
+                                const span = progressText.querySelector('span:last-child');
+                                if (span) span.textContent = `${completionPercentage}%`;
+                            }
+                        }
+                        
+                        const statNumbers = passwordCard.querySelectorAll('.stat-number');
+                        if (statNumbers.length > 0) {
+                            statNumbers[0].textContent = `${accuracy}%`;
+                            if (statNumbers.length > 1) {
+                                statNumbers[1].textContent = `${passwordChefData.ordersCompleted || 0}/5`;
+                            }
+                        }
+                    } else {
+                        console.log('Password card not found');
+                    }
+                    
+                    // Add user to leaderboard if they have a score
+                    if (passwordChefData.score > 0) {
+                        addUserToLeaderboard(userProfile.totalScore || passwordChefData.score, completionPercentage);
+                    }
+                } else {
+                    console.log('No user data found');
+                }
+            } catch (error) {
+                console.error('Error in loadUserData:', error);
+            }
+        }
+        
+        // Add current user to leaderboard
+        function addUserToLeaderboard(userScore, completion) {
+            const leaderboardBody = document.getElementById('leaderboardBody');
+            const userRow = document.createElement('tr');
+            userRow.style.background = 'rgba(14, 165, 233, 0.1)';
+            userRow.style.border = '1px solid var(--primary-color)';
+            
+            userRow.innerHTML = `
+                <td>
+                    <div class="rank">
+                        <div class="rank-number" style="background: var(--primary-color); color: white;">You</div>
+                    </div>
+                </td>
+                <td><strong>You</strong></td>
+                <td>Your Department</td>
+                <td><span class="score">${userScore}</span></td>
+                <td>${completion}%</td>
+                <td><div class="trend up"><i class="fas fa-arrow-up"></i> New</div></td>
+            `;
+            
+            // Insert user row at appropriate position based on score
+            const rows = Array.from(leaderboardBody.querySelectorAll('tr'));
+            let inserted = false;
+            
+            for (let i = 0; i < rows.length; i++) {
+                const rowScore = parseInt(rows[i].querySelector('.score').textContent);
+                if (userScore > rowScore) {
+                    leaderboardBody.insertBefore(userRow, rows[i]);
+                    inserted = true;
+                    break;
+                }
+            }
+            
+            if (!inserted) {
+                leaderboardBody.appendChild(userRow);
+            }
+        }
+
+        // Add functionality to assessment buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Assessment page loaded, showing construction notice...');
+            
+            // Show construction notice FIRST, before anything else
+            setTimeout(() => {
+                console.log('Timeout triggered, calling showConstructionNotice');
+                showConstructionNotice();
+            }, 100);
+            
+            // Then load user data with a longer delay to ensure DOM is ready
+            setTimeout(() => {
+                loadUserData();
+            }, 200);
+            
+            // Phishing Detection buttons
+            const phishingCard = document.querySelector('[data-assessment="phishing"]');
+            if (phishingCard) {
+                phishingCard.querySelector('.assessment-btn.primary').onclick = () => window.location.href = 'phishing-game.html';
+                phishingCard.querySelector('.assessment-btn.secondary').onclick = () => window.location.href = 'phishing-game.html';
+            }
+            
+            // Password Security buttons
+            const passwordCard = document.querySelector('[data-assessment="password"]');
+            if (passwordCard) {
+                passwordCard.querySelector('.assessment-btn.primary').onclick = () => window.location.href = 'password-chef.html';
+                passwordCard.querySelector('.assessment-btn.secondary').onclick = () => window.location.href = 'password-chef.html';
+            }
+            
+            // General Security buttons
+            const generalCard = document.querySelector('[data-assessment="general"]');
+            if (generalCard) {
+                generalCard.querySelector('.assessment-btn.primary').onclick = showComingSoon;
+                generalCard.querySelector('.assessment-btn.secondary').onclick = showComingSoon;
+            }
+            
+            // Advanced Security buttons
+            const advancedCard = document.querySelector('[data-assessment="advanced"]');
+            if (advancedCard) {
+                advancedCard.querySelector('.assessment-btn.primary').onclick = showComingSoon;
+                advancedCard.querySelector('.assessment-btn.secondary').onclick = showComingSoon;
+            }
+        });
+
+        // Add interactivity for filter buttons
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                // TODO: Filter leaderboard data based on selection
+            });
+        });
+
+        // Add hover effects for assessment cards
+        document.querySelectorAll('.assessment-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html> 

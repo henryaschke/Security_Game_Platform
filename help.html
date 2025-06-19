@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - CyberSmart Security Education Platform</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path fill='%230ea5e9' d='M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9v28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.4 25.7-13.4 39.6C12.3 461.1 27.2 480 48 480c7.8 0 15-2.9 20.8-8.1l35.2-31.6c9.5-8.5 22.8-13.2 36.7-13.2H304c30.9 0 56 25.1 56 56s-25.1 56-56 56H112c-17.7 0-32 14.3-32 32s14.3 32 32 32H304c66.3 0 120-53.7 120-120c0-10.5-1.4-20.7-4-30.4c2.6 9.7 4 19.9 4 30.4c0 66.3-53.7 120-120 120s-120-53.7-120-120c0-30.9 11.7-59.1 30.8-80.2c-4.9-10.9-7.8-23.1-7.8-35.8v-28.1c0-30.2 9.4-58.9 25.1-82.3c-8.6-4.3-18.3-6.6-28.1-6.6c-35.3 0-64 28.7-64 64v112c0 8.8 7.2 16 16 16s16-7.2 16-16V224c0-17.7 14.3-32 32-32s32 14.3 32 32v112c0 8.8 7.2 16 16 16s16-7.2 16-16V224c0-35.3-28.7-64-64-64c-9.8 0-19.5 2.2-28.1 6.6C201.4 140.1 210.8 111.4 210.8 81.2c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 35.3 28.7 64 64 64c9.8 0 19.5-2.2 28.1-6.6c15.7 23.4 25.1 52.1 25.1 82.3v28.1c0 12.7-2.9 24.9-7.8 35.8c19.1 21.1 30.8 49.3 30.8 80.2c0 66.3-53.7 120-120 120s-120-53.7-120-120c0-10.5 1.4-20.7 4-30.4c-2.6-9.7-4-19.9-4-30.4c0-66.3 53.7-120 120-120c30.9 0 56-25.1 56-56s-25.1-56-56-56H192c-13.9 0-27.2 4.7-36.7 13.2L120.1 71.9C114.3 77.1 107.1 80 99.3 80c-20.8 0-35.7-18.9-35.7-40.6c0-13.9 6.9-26.6 13.4-39.6C88.5 22.7 99.3-6.6 99.3-35V-63.1c0-8.8 7.2-16 16-16s16 7.2 16 16V-35c0 28.4 10.8 57.7 22.3 80.8c6.5 13 13.4 25.7 13.4 39.6c0 21.7-14.9 40.6-35.7 40.6c-7.8 0-15-2.9-20.8-8.1L75.3 86.3c-9.5-8.5-22.8-13.2-36.7-13.2H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H38.6c13.9 0 27.2-4.7 36.7-13.2l35.2-31.6c5.8-5.2 13-8.1 20.8-8.1c20.8 0 35.7 18.9 35.7 40.6c0 13.9-6.9 26.6-13.4 39.6C141.2 165 130.4 194.3 130.4 222.7v28.1c0 30.2-9.4 58.9-25.1 82.3c8.6 4.3 18.3 6.6 28.1 6.6c35.3 0 64-28.7 64-64V163.9c0-8.8-7.2-16-16-16s-16 7.2-16 16v111.8c0 17.7-14.3 32-32 32s-32-14.3-32-32V163.9c0-8.8-7.2-16-16-16s-16 7.2-16 16v111.8c0 35.3 28.7 64 64 64c9.8 0 19.5-2.2 28.1-6.6c-15.7-23.4-25.1-52.1-25.1-82.3v-28.1c0-32.1 9.4-62.6 25.8-88.4L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32z'/></svg>" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .help-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .help-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .help-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .help-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 2rem auto 0;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-lg);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus + i {
+            color: white;
+        }
+
+        .help-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .help-category {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .help-category:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        }
+
+        .help-category-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .help-category:hover .help-category-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .help-category-icon.getting-started {
+            background: var(--gradient-primary);
+        }
+
+        .help-category-icon.tutorials {
+            background: var(--gradient-secondary);
+        }
+
+        .help-category-icon.troubleshooting {
+            background: linear-gradient(135deg, var(--accent-orange), #f59e0b);
+        }
+
+        .help-category-icon.contact {
+            background: linear-gradient(135deg, var(--accent-green), #10b981);
+        }
+
+        .help-category h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .help-category p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .help-links {
+            list-style: none;
+        }
+
+        .help-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .help-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+            border-radius: var(--border-radius-md);
+            background: var(--surface-bg);
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .help-links a:hover {
+            color: var(--primary-color);
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .help-links a i {
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+
+        .faq-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: var(--surface-bg);
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .faq-question {
+            background: var(--surface-bg);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--hover-bg);
+        }
+
+        .faq-question h4 {
+            margin: 0;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-answer.active {
+            padding: 1rem 1.5rem;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-method {
+            background: var(--surface-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-method:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        }
+
+        .contact-method i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-method h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-method p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .back-nav {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-md);
+            transition: all 0.3s ease;
+            background: var(--surface-bg);
+        }
+
+        .back-nav:hover {
+            background: var(--hover-bg);
+            transform: translateX(-5px);
+        }
+
+        .back-nav i {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tech Background -->
+    <div class="tech-bg">
+        <div class="grid-pattern"></div>
+        <div class="floating-elements">
+            <i class="fas fa-question-circle"></i>
+            <i class="fas fa-life-ring"></i>
+            <i class="fas fa-book"></i>
+            <i class="fas fa-headset"></i>
+            <i class="fas fa-graduation-cap"></i>
+            <i class="fas fa-shield-alt"></i>
+        </div>
+    </div>
+
+    <!-- Back Navigation -->
+    <a href="index.html" class="back-nav">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="help-container">
+        <!-- Help Header -->
+        <div class="help-header">
+            <h1><i class="fas fa-life-ring"></i> Help Center</h1>
+            <p>Get the support you need to master cybersecurity with CyberSmart. Find answers, tutorials, and expert guidance.</p>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for help articles, tutorials, or topics..." id="helpSearch">
+            </div>
+        </div>
+
+        <!-- Help Categories -->
+        <div class="help-categories">
+            <div class="help-category">
+                <div class="help-category-icon getting-started">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3>Getting Started</h3>
+                <p>New to CyberSmart? Learn the basics and get up to speed quickly with our comprehensive guides.</p>
+                <ul class="help-links">
+                    <li><a href="#"><i class="fas fa-play"></i> Platform Overview</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> Creating Your Account</a></li>
+                    <li><a href="#"><i class="fas fa-gamepad"></i> Your First Training Module</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Understanding Progress Tracking</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon tutorials">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h3>Video Tutorials</h3>
+                <p>Step-by-step video guides to help you make the most of CyberSmart's features and tools.</p>
+                <ul class="help-links">
+                    <li><a href="#"><i class="fas fa-video"></i> Password Security Training (5 min)</a></li>
+                    <li><a href="#"><i class="fas fa-video"></i> Phishing Detection Game (7 min)</a></li>
+                    <li><a href="#"><i class="fas fa-video"></i> Taking Assessments (4 min)</a></li>
+                    <li><a href="#"><i class="fas fa-video"></i> Managing Your Progress (3 min)</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon troubleshooting">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Troubleshooting</h3>
+                <p>Having issues? Find solutions to common problems and technical difficulties.</p>
+                <ul class="help-links">
+                    <li><a href="#"><i class="fas fa-bug"></i> Game Not Loading</a></li>
+                    <li><a href="#"><i class="fas fa-wifi"></i> Connection Issues</a></li>
+                    <li><a href="#"><i class="fas fa-mobile-alt"></i> Mobile Compatibility</a></li>
+                    <li><a href="#"><i class="fas fa-browser"></i> Browser Requirements</a></li>
+                </ul>
+            </div>
+
+            <div class="help-category">
+                <div class="help-category-icon contact">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Contact Support</h3>
+                <p>Need personalized help? Our support team is here to assist you with any questions or issues.</p>
+                <ul class="help-links">
+                    <li><a href="#"><i class="fas fa-envelope"></i> Email Support</a></li>
+                    <li><a href="#"><i class="fas fa-comments"></i> Live Chat</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> Phone Support</a></li>
+                    <li><a href="#"><i class="fas fa-ticket-alt"></i> Submit a Ticket</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>How do I start my cybersecurity training?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Simply click on any training module from the dashboard. We recommend starting with the Password Security module for beginners. Each module includes interactive games, assessments, and real-world scenarios to help you learn effectively.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>What happens if I fail a phishing detection test?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Don't worry! Failing is part of learning. You'll receive immediate feedback explaining what you missed, along with tips to improve. You can retake the test as many times as needed to master the skills.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>How is my progress tracked?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>CyberSmart automatically tracks your completion rates, scores, time spent, and achievements. You can view detailed analytics in the Progress section of your dashboard, including strengths and areas for improvement.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>Can I access CyberSmart on mobile devices?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! CyberSmart is fully responsive and works on tablets and smartphones. While some interactive elements work best on desktop, all core training features are accessible on mobile devices.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>How long does each training module take?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Training modules vary in length: Password Security (15-20 min), Phishing Detection (25-30 min), and Skill Assessments (30-45 min). You can pause and resume at any time, so you can learn at your own pace.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h4>Will I receive a certificate upon completion?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! Upon successfully completing all modules and assessments, you'll receive a digital certificate that demonstrates your cybersecurity knowledge. This can be shared on LinkedIn or included in your professional portfolio.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="faq-section">
+            <h2><i class="fas fa-headset"></i> Get in Touch</h2>
+            <p>Still need help? Our support team is ready to assist you.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <h4>Email Support</h4>
+                    <p>support@cybersmart.edu<br>Response within 24 hours</p>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fas fa-comments"></i>
+                    <h4>Live Chat</h4>
+                    <p>Available 9 AM - 5 PM EST<br>Instant responses</p>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fas fa-phone"></i>
+                    <h4>Phone Support</h4>
+                    <p>1-800-CYBER-EDU<br>9 AM - 5 PM EST</p>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fas fa-globe"></i>
+                    <h4>Community Forum</h4>
+                    <p>Connect with other learners<br>Share tips and experiences</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // FAQ Toggle Functionality
+        function toggleFAQ(questionElement) {
+            const answer = questionElement.nextElementSibling;
+            const icon = questionElement.querySelector('i');
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-answer').forEach(faq => {
+                if (faq !== answer) {
+                    faq.classList.remove('active');
+                    faq.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
+                }
+            });
+            
+            // Toggle current FAQ
+            answer.classList.toggle('active');
+            
+            if (answer.classList.contains('active')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Search Functionality
+        document.getElementById('helpSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const categories = document.querySelectorAll('.help-category');
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            // Search in categories
+            categories.forEach(category => {
+                const categoryText = category.textContent.toLowerCase();
+                if (categoryText.includes(searchTerm) || searchTerm === '') {
+                    category.style.display = 'block';
+                } else {
+                    category.style.display = 'none';
+                }
+            });
+            
+            // Search in FAQs
+            faqItems.forEach(item => {
+                const itemText = item.textContent.toLowerCase();
+                if (itemText.includes(searchTerm) || searchTerm === '') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Show coming soon modal for help links
+        function showComingSoon(title) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); display: flex; align-items: center; 
+                justify-content: center; z-index: 1000; backdrop-filter: blur(5px);
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius-lg); 
+                     text-align: center; max-width: 400px; border: 1px solid var(--border-color);">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
+                        <i class="fas fa-construction"></i> Coming Soon
+                    </h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                        ${title} will be available in a future update. We're working hard to bring you more content!
+                    </p>
+                    <button onclick="this.closest('div').parentElement.remove()" 
+                            style="background: var(--gradient-primary); color: white; border: none; 
+                                   padding: 0.75rem 1.5rem; border-radius: var(--border-radius-md); cursor: pointer;">
+                        <i class="fas fa-check"></i> Got it!
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        // Add functionality to help links
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.help-links a[href="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const title = this.textContent.trim();
+                    showComingSoon(title);
+                });
+            });
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            if (anchor.getAttribute('href') !== '#') {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
